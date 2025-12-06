@@ -1,0 +1,383 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Midnight Sapphire & Champagne - Light Mode (inverted for contrast) */
+    --background: 220 25% 97%;
+    --foreground: 220 30% 8%;
+    
+    --card: 220 20% 98%;
+    --card-foreground: 220 30% 8%;
+    
+    --popover: 220 20% 98%;
+    --popover-foreground: 220 30% 8%;
+    
+    --primary: 217 50% 35%;
+    --primary-foreground: 40 30% 95%;
+    
+    --secondary: 220 15% 92%;
+    --secondary-foreground: 220 20% 25%;
+    
+    --muted: 220 12% 88%;
+    --muted-foreground: 220 10% 45%;
+    
+    --accent: 39 45% 75%;
+    --accent-foreground: 220 30% 8%;
+    
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 217 50% 35%;
+    
+    --radius: 0.5rem;
+    
+    /* Midnight Sapphire Custom Tokens */
+    --midnight: 220 40% 8%;
+    --midnight-light: 220 35% 18%;
+    --sapphire: 217 50% 35%;
+    --sapphire-glow: 217 60% 50%;
+    --champagne: 39 45% 75%;
+    --champagne-light: 39 50% 85%;
+    --gold: 39 55% 60%;
+    --stone: 220 15% 92%;
+    --stone-dark: 220 12% 85%;
+    --ink: 220 30% 8%;
+    --charcoal: 220 15% 25%;
+    --taupe: 220 10% 55%;
+    --cream: 40 40% 97%;
+    --surface: 220 20% 97%;
+    
+    /* Glassmorphism */
+    --glass-bg: 220 20% 98% / 0.8;
+    --glass-border: 220 15% 88% / 0.5;
+    
+    /* Shadows */
+    --shadow-subtle: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.03);
+    --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+    --shadow-elevated: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
+    --shadow-float: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+    --shadow-sapphire: 0 10px 40px -10px hsl(217 50% 35% / 0.3);
+    
+    /* Sidebar */
+    --sidebar-background: 220 25% 97%;
+    --sidebar-foreground: 220 10% 30%;
+    --sidebar-primary: 217 50% 35%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 92%;
+    --sidebar-accent-foreground: 220 30% 8%;
+    --sidebar-border: 220 15% 88%;
+    --sidebar-ring: 217 50% 35%;
+  }
+
+  .dark {
+    /* Midnight Sapphire & Champagne - Dark Mode (Primary Theme) */
+    --background: 220 40% 6%;
+    --foreground: 40 20% 95%;
+    
+    --card: 220 35% 10%;
+    --card-foreground: 40 20% 95%;
+    
+    --popover: 220 35% 10%;
+    --popover-foreground: 40 20% 95%;
+    
+    --primary: 39 45% 75%;
+    --primary-foreground: 220 40% 6%;
+    
+    --secondary: 220 30% 15%;
+    --secondary-foreground: 40 15% 85%;
+    
+    --muted: 220 25% 18%;
+    --muted-foreground: 220 10% 55%;
+    
+    --accent: 217 50% 45%;
+    --accent-foreground: 40 20% 95%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 220 25% 18%;
+    --input: 220 25% 18%;
+    --ring: 39 45% 75%;
+    
+    /* Midnight Sapphire Custom Tokens - Dark */
+    --midnight: 220 40% 6%;
+    --midnight-light: 220 35% 12%;
+    --sapphire: 217 50% 45%;
+    --sapphire-glow: 217 60% 55%;
+    --champagne: 39 45% 75%;
+    --champagne-light: 39 40% 65%;
+    --gold: 39 55% 60%;
+    --stone: 220 25% 15%;
+    --stone-dark: 220 30% 12%;
+    --ink: 40 20% 95%;
+    --charcoal: 220 10% 70%;
+    --taupe: 220 8% 60%;
+    --cream: 220 35% 10%;
+    --surface: 220 35% 8%;
+    
+    /* Glassmorphism - Dark */
+    --glass-bg: 220 35% 10% / 0.85;
+    --glass-border: 220 25% 25% / 0.5;
+    
+    /* Shadows - Dark */
+    --shadow-subtle: 0 1px 3px 0 rgb(0 0 0 / 0.2);
+    --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+    --shadow-elevated: 0 10px 15px -3px rgb(0 0 0 / 0.4);
+    --shadow-float: 0 25px 50px -12px rgb(0 0 0 / 0.6);
+    --shadow-sapphire: 0 10px 40px -10px hsl(217 50% 45% / 0.4);
+    
+    --sidebar-background: 220 35% 8%;
+    --sidebar-foreground: 40 10% 80%;
+    --sidebar-primary: 39 45% 75%;
+    --sidebar-primary-foreground: 220 40% 6%;
+    --sidebar-accent: 220 30% 15%;
+    --sidebar-accent-foreground: 40 10% 80%;
+    --sidebar-border: 220 25% 18%;
+    --sidebar-ring: 39 45% 75%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    @apply tracking-tight;
+  }
+}
+
+@layer components {
+  /* Glass card effect */
+  .glass-card {
+    @apply bg-card/70 backdrop-blur-xl border border-border/50 rounded-lg;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .glass-card-elevated {
+    @apply bg-card/80 backdrop-blur-2xl border border-border/40 rounded-xl;
+    box-shadow: var(--shadow-elevated);
+  }
+  
+  /* Midnight glass effect */
+  .midnight-glass {
+    @apply bg-midnight/80 backdrop-blur-2xl border border-sapphire/20 rounded-xl;
+    box-shadow: var(--shadow-sapphire);
+  }
+  
+  /* Premium button styles */
+  .btn-luxury {
+    @apply relative overflow-hidden transition-all duration-300 ease-out;
+  }
+  
+  .btn-luxury::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full;
+    transition: transform 0.6s ease;
+  }
+  
+  .btn-luxury:hover::before {
+    @apply translate-x-full;
+  }
+  
+  /* Gold shimmer effect */
+  .gold-shimmer {
+    background: linear-gradient(
+      120deg,
+      hsl(var(--champagne)) 0%,
+      hsl(var(--champagne-light)) 50%,
+      hsl(var(--champagne)) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  
+  /* Sapphire glow effect */
+  .sapphire-glow {
+    box-shadow: 0 0 30px hsl(var(--sapphire) / 0.3), 
+                0 0 60px hsl(var(--sapphire) / 0.1);
+  }
+  
+  /* Elegant underline animation */
+  .elegant-underline {
+    @apply relative;
+  }
+  
+  .elegant-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-px bg-champagne transition-all duration-300 ease-out;
+  }
+  
+  .elegant-underline:hover::after {
+    @apply w-full;
+  }
+  
+  /* Luxury card hover */
+  .luxury-card {
+    @apply transition-all duration-500 ease-out;
+  }
+  
+  .luxury-card:hover {
+    @apply -translate-y-1;
+    box-shadow: var(--shadow-float);
+  }
+  
+  /* Editorial text styles */
+  .text-editorial {
+    @apply text-lg leading-relaxed tracking-wide text-muted-foreground;
+  }
+  
+  .heading-display {
+    font-family: 'Playfair Display', serif;
+    @apply text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-none;
+  }
+  
+  .heading-large {
+    font-family: 'Playfair Display', serif;
+    @apply text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight;
+  }
+  
+  .heading-medium {
+    font-family: 'Playfair Display', serif;
+    @apply text-2xl md:text-3xl font-medium tracking-tight;
+  }
+  
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-champagne via-gold to-champagne bg-clip-text text-transparent;
+  }
+  
+  /* Midnight gradient backgrounds */
+  .gradient-midnight {
+    @apply bg-gradient-to-b from-midnight via-midnight-light to-midnight;
+  }
+  
+  .gradient-sapphire {
+    @apply bg-gradient-to-br from-sapphire/20 via-transparent to-champagne/10;
+  }
+  
+  /* Subtle grain texture overlay */
+  .grain-overlay {
+    @apply pointer-events-none fixed inset-0 z-50 opacity-[0.02];
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  /* Spacing utilities for luxury layouts */
+  .section-padding {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+  
+  .container-luxury {
+    @apply max-w-7xl mx-auto px-6 md:px-8 lg:px-12;
+  }
+  
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Animation utilities */
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+  
+  .animate-glow-pulse {
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+  
+  /* Stagger delays */
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  .delay-500 { animation-delay: 500ms; }
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 200% 0; }
+  50% { background-position: -200% 0; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px hsl(var(--sapphire) / 0.2), 
+                0 0 40px hsl(var(--sapphire) / 0.1);
+  }
+  50% { 
+    box-shadow: 0 0 30px hsl(var(--sapphire) / 0.4), 
+                0 0 60px hsl(var(--sapphire) / 0.2);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
