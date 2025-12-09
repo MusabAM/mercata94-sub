@@ -12,18 +12,18 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Mercato94 — Premium Digital Marketplace | Curated Creative Assets</title>
+        <title>94mercato — Premium Digital Marketplace | Curated Creative Assets</title>
         <meta
           name="description"
           content="Discover premium digital products from top creators. Templates, UI kits, courses, mockups, fonts and more. Where digital craft becomes timeless."
         />
-        <meta property="og:title" content="Mercato94 — Premium Digital Marketplace" />
+        <meta property="og:title" content="94mercato — Premium Digital Marketplace" />
         <meta
           property="og:description"
           content="Curated high-end digital assets for creators who value excellence."
         />
         <meta property="og:type" content="website" />
-        <link rel="canonical" href="https://mercato94.com" />
+        <link rel="canonical" href="https://94mercato.com" />
       </Helmet>
       <Layout>
         <Hero />

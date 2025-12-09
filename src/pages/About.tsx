@@ -9,7 +9,7 @@ const values = [
     icon: Sparkles,
     title: "Quality First",
     description:
-      "Every product on Mercato94 is curated for quality. We believe in showcasing only the best digital craftsmanship.",
+      "Every product on 94mercato is curated for quality. We believe in showcasing only the best digital craftsmanship.",
   },
   {
     icon: Heart,
@@ -52,10 +52,10 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>About — Mercato94</title>
+        <title>About — 94mercato</title>
         <meta
           name="description"
-          content="Learn about Mercato94, the premium digital marketplace where digital craft becomes timeless. Our mission, values, and team."
+          content="Learn about 94mercato, the premium digital marketplace where digital craft becomes timeless. Our mission, values, and team."
         />
       </Helmet>
       <Layout>
@@ -74,7 +74,7 @@ const About = () => {
                 <span className="text-taupe">Becomes Timeless</span>
               </h1>
               <p className="text-xl text-muted-foreground animate-fade-up delay-200">
-                Mercato94 is a curated marketplace for premium digital products.
+                94mercato is a curated marketplace for premium digital products.
                 We connect talented creators with customers who value quality and
                 craftsmanship.
               </p>
@@ -97,7 +97,7 @@ const About = () => {
                 </div>
                 <p className="text-editorial">
                   We believe that great digital products deserve a premium
-                  showcase. Mercato94 was founded to create a space where
+                  showcase. 94mercato was founded to create a space where
                   quality matters — where creators can present their best work
                   and customers can discover products that truly stand out.
                 </p>
@@ -156,7 +156,7 @@ const About = () => {
               </span>
               <h2 className="heading-large mt-3 mb-4">What We Stand For</h2>
               <p className="text-muted-foreground">
-                These principles guide everything we do at Mercato94.
+                These principles guide everything we do at 94mercato.
               </p>
             </div>
 
@@ -226,7 +226,7 @@ const About = () => {
             </p>
             <h2 className="font-serif text-4xl font-medium mb-4">Outbrix</h2>
             <p className="text-background/60 max-w-lg mx-auto mb-10">
-              Mercato94 is proudly built by Outbrix, a company dedicated to
+              94mercato is proudly built by Outbrix, a company dedicated to
               creating tools and platforms that empower creators worldwide.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">

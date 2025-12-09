@@ -20,10 +20,10 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Login — Mercato94</title>
+        <title>Login — 94mercato</title>
         <meta
           name="description"
-          content="Sign in to your Mercato94 account to access your purchases, manage your products, and track your sales."
+          content="Sign in to your 94mercato account to access your purchases, manage your products, and track your sales."
         />
       </Helmet>
       <Layout>

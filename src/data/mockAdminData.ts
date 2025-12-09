@@ -106,7 +106,7 @@ export const mockUsers: AdminUser[] = [
   },
   {
     id: "usr-005",
-    email: "admin@mercato94.com",
+    email: "admin@94mercato.com",
     name: "Admin User",
     role: "admin",
     verified: true,
@@ -257,7 +257,7 @@ export const mockPayouts: AdminPayout[] = [
 export const mockLogs: AdminLog[] = [
   {
     id: "log-001",
-    adminEmail: "admin@mercato94.com",
+    adminEmail: "admin@94mercato.com",
     actionType: "user_banned",
     targetId: "usr-004",
     targetType: "user",
@@ -267,7 +267,7 @@ export const mockLogs: AdminLog[] = [
   },
   {
     id: "log-002",
-    adminEmail: "admin@mercato94.com",
+    adminEmail: "admin@94mercato.com",
     actionType: "product_flagged",
     targetId: "prod-004",
     targetType: "product",
@@ -277,7 +277,7 @@ export const mockLogs: AdminLog[] = [
   },
   {
     id: "log-003",
-    adminEmail: "admin@mercato94.com",
+    adminEmail: "admin@94mercato.com",
     actionType: "payout_processed",
     targetId: "pay-003",
     targetType: "payout",
@@ -287,7 +287,7 @@ export const mockLogs: AdminLog[] = [
   },
   {
     id: "log-004",
-    adminEmail: "admin@mercato94.com",
+    adminEmail: "admin@94mercato.com",
     actionType: "settings_updated",
     targetId: "commission",
     targetType: "settings",
@@ -310,7 +310,7 @@ export const mockKPIs = {
 
 export const mockSettings = {
   platformCommission: 0.12,
-  siteTitle: "Mercato94",
+  siteTitle: "94mercato",
   featuredCollections: ["UI Kits", "Templates", "Icons"],
   maintenanceMode: false,
   allowNewSignups: true,

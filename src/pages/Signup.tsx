@@ -25,10 +25,10 @@ const Signup = () => {
   return (
     <>
       <Helmet>
-        <title>Create Account — Mercato94</title>
+        <title>Create Account — 94mercato</title>
         <meta
           name="description"
-          content="Join Mercato94 to discover premium digital products or start selling your creative work to thousands of customers."
+          content="Join 94mercato to discover premium digital products or start selling your creative work to thousands of customers."
         />
       </Helmet>
       <Layout>

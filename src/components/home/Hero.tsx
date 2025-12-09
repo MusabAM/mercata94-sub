@@ -38,7 +38,7 @@ export function Hero() {
             
             {/* Subtext */}
             <p className="text-lg leading-relaxed text-cream/60 max-w-lg animate-fade-up delay-200">
-              Mercato94 curates high-end digital assets for creators who value excellence. 
+              94mercato curates high-end digital assets for creators who value excellence. 
               Premium templates, UI kits, courses, and creative resources — built to stand out.
             </p>
             

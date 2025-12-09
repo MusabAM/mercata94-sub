@@ -41,7 +41,7 @@ const aiFeatures = [
   },
   {
     icon: MessageSquare,
-    title: "Ask Mercato",
+    title: "Ask 94mercato",
     description:
       "Get instant answers about products, licenses, and more with our AI-powered assistant.",
     tag: "For Everyone",
@@ -75,7 +75,7 @@ export function AIFeatures() {
             Intelligence Built In
           </h2>
           <p className="text-cream/60 text-lg">
-            Mercato94 uses AI to help sellers create better listings and buyers
+            94mercato uses AI to help sellers create better listings and buyers
             discover perfect products. All features work seamlessly in the background.
           </p>
         </div>

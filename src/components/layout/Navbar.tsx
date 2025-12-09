@@ -49,7 +49,7 @@ export function Navbar() {
               <span className="font-serif text-lg font-semibold text-cream">M</span>
             </div>
             <span className="font-serif text-xl tracking-tight text-cream">
-              Mercato<span className="text-champagne">94</span>
+              <span className="text-champagne">94</span>mercato
             </span>
           </Link>
 

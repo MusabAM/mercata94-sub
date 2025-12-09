@@ -12,19 +12,19 @@ const contactOptions = [
     icon: HelpCircle,
     title: "Support",
     description: "Get help with your account, purchases, or technical issues.",
-    email: "support@mercato94.com",
+    email: "support@94mercato.com",
   },
   {
     icon: MessageSquare,
     title: "Sales",
     description: "Questions about selling, commissions, or partnerships.",
-    email: "sellers@mercato94.com",
+    email: "sellers@94mercato.com",
   },
   {
     icon: Mail,
     title: "Press",
     description: "Media inquiries and press kit requests.",
-    email: "press@mercato94.com",
+    email: "press@94mercato.com",
   },
 ];
 
@@ -45,10 +45,10 @@ const Contact = () => {
   return (
     <>
       <Helmet>
-        <title>Contact — Mercato94</title>
+        <title>Contact — 94mercato</title>
         <meta
           name="description"
-          content="Get in touch with Mercato94. Contact our support team, sales, or press departments."
+          content="Get in touch with 94mercato. Contact our support team, sales, or press departments."
         />
       </Helmet>
       <Layout>

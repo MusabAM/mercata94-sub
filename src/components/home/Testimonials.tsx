@@ -4,7 +4,7 @@ const testimonials = [
   {
     id: 1,
     content:
-      "Mercato94 has transformed how I sell my design assets. The platform is elegant, the commission is fair, and my sales have tripled since joining.",
+      "94mercato has transformed how I sell my design assets. The platform is elegant, the commission is fair, and my sales have tripled since joining.",
     author: {
       name: "Sarah Chen",
       role: "UI Designer",
@@ -54,7 +54,7 @@ export function Testimonials() {
           </h2>
           <p className="text-cream/60">
             See what our community of sellers and buyers have to say about their
-            experience with Mercato94.
+            experience with 94mercato.
           </p>
         </div>
 
