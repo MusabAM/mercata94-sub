@@ -376,6 +376,7 @@
   animation: float 5s ease-in-out infinite;
 }
 
-.text-black {
+nav > a.text-black {
   background-image: none !important;
+  color: hsl(var(--ink)) !important;
 }
