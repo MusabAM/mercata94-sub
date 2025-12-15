@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Search, ShoppingBag, Menu, X, User, LogIn, Crown, LayoutDashboard } from 'lucide-react';
 
-const Logo = ({ scrolled, isHomePage }) => (
+const Logo = () => (
   <Link to="/" className="flex items-center gap-2">
     <svg 
-      className={`h-8 w-auto transition-all duration-300 ${scrolled ? 'h-7' : 'h-8'}`}
+      className="h-8 w-auto"
       width="34"
       height="34"
       viewBox="0 0 34 34"
@@ -23,13 +23,13 @@ const Logo = ({ scrolled, isHomePage }) => (
         </linearGradient>
       </defs>
     </svg>
-    <span className={`font-serif text-xl font-bold transition-colors ${!isHomePage || scrolled ? 'text-stone-900' : 'text-white'}`}>
-      94<span className={!isHomePage || scrolled ? "text-stone-500" : "text-champagne"}>mercato</span>
+    <span className="font-serif text-xl font-bold text-cream">
+      94<span className="text-champagne">mercato</span>
     </span>
   </Link>
 );
 
-const Navigation = ({ links, scrolled, isHomePage }) => (
+const Navigation = ({ links }) => (
   <nav className="hidden lg:flex items-center gap-1">
     {links.map((link) => (
       <NavLink
@@ -38,8 +38,8 @@ const Navigation = ({ links, scrolled, isHomePage }) => (
         className={({ isActive }) =>
           `px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
             isActive
-              ? (!isHomePage || scrolled ? 'bg-stone-100 text-stone-900' : 'bg-white/20 text-white')
-              : (!isHomePage || scrolled ? 'text-stone-700 hover:text-stone-900 hover:bg-stone-100' : 'text-cream/80 hover:text-cream hover:bg-white/10')
+              ? 'bg-sapphire/20 text-champagne'
+              : 'text-cream/70 hover:text-cream hover:bg-sapphire/10'
           }`
         }
       >
@@ -49,12 +49,12 @@ const Navigation = ({ links, scrolled, isHomePage }) => (
   </nav>
 );
 
-const HeaderActions = ({ user, scrolled, isHomePage }) => (
+const HeaderActions = ({ user }) => (
   <div className="flex items-center gap-3">
-    <Button variant="ghost" size="icon" className={`transition-colors ${!isHomePage || scrolled ? 'text-black hover:bg-muted' : 'text-cream/80 hover:bg-white/10'}`}>
+    <Button variant="ghost" size="icon" className="text-cream/70 hover:text-cream hover:bg-sapphire/10">
       <Search className="h-5 w-5" />
     </Button>
-    <Button variant="ghost" size="icon" className={`relative transition-colors ${!isHomePage || scrolled ? 'text-black hover:bg-muted' : 'text-cream/80 hover:bg-white/10'}`}>
+    <Button variant="ghost" size="icon" className="relative text-cream/70 hover:text-cream hover:bg-sapphire/10">
       <ShoppingBag className="h-5 w-5" />
       <Badge className="absolute -top-1 -right-1 h-4 w-4 justify-center p-0 text-xs bg-champagne text-black">3</Badge>
     </Button>
@@ -62,8 +62,8 @@ const HeaderActions = ({ user, scrolled, isHomePage }) => (
       <Link to="/dashboard" className="flex items-center gap-2 pl-2">
         <img src={user.avatar} alt={user.name} className="h-8 w-8 rounded-full border-2 border-champagne/50" />
         <div className="hidden md:block">
-          <p className={`text-sm font-medium ${!isHomePage || scrolled ? 'text-black' : 'text-cream'}`}>{user.name}</p>
-          <p className={`text-xs capitalize ${!isHomePage || scrolled ? 'text-muted-foreground' : 'text-cream/60'}`}>{user.role}</p>
+          <p className="text-sm font-medium text-cream">{user.name}</p>
+          <p className="text-xs capitalize text-cream/60">{user.role}</p>
         </div>
       </Link>
     ) : (
@@ -99,18 +99,8 @@ const getNavigationLinks = (user) => [
 ];
 
 export const Header = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     setMobileMenuOpen(false); // Close mobile menu on route change
@@ -119,27 +109,20 @@ export const Header = () => {
   const user = null; // Replace with auth context logic
   const navLinks = getNavigationLinks(user);
 
-  const headerClasses = `
-    fixed top-0 left-0 right-0 z-50 transition-all duration-300
-    ${!isHomePage || scrolled ? 'bg-background/80 backdrop-blur-lg border-b border-border shadow-sm' : 'bg-transparent'}
-  `;
-
-  const containerClasses = `
-    container-luxury flex items-center justify-between transition-all duration-300
-    ${!isHomePage || scrolled ? 'h-16' : 'h-20'}
-  `;
+  const headerClasses = "fixed top-0 left-0 right-0 z-50 h-16 bg-midnight border-b border-sapphire/20";
+  const containerClasses = "container-luxury flex items-center justify-between h-full";
 
   return (
     <header className={headerClasses}>
       <div className={containerClasses}>
-        <Logo scrolled={scrolled} isHomePage={isHomePage} />
-        <Navigation links={navLinks} scrolled={scrolled} isHomePage={isHomePage} />
+        <Logo />
+        <Navigation links={navLinks} />
         <div className="flex items-center gap-2">
-          <HeaderActions user={user} scrolled={scrolled} isHomePage={isHomePage} />
+          <HeaderActions user={user} />
           <Button
             variant="ghost"
             size="icon"
-            className={`lg:hidden transition-colors ${!isHomePage || scrolled ? 'text-black' : 'text-cream'}`}
+            className="lg:hidden text-cream"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -150,7 +133,7 @@ export const Header = () => {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div 
-          className={`fixed inset-0 z-40 bg-midnight/90 backdrop-blur-xl animate-fade-in lg:hidden ${!isHomePage || scrolled ? 'top-16' : 'top-20'}`}
+          className="fixed inset-0 top-16 z-40 bg-midnight/90 backdrop-blur-xl animate-fade-in lg:hidden"
         >
           <div className="container-luxury pt-8 space-y-4">
             {user ? (
