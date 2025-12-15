@@ -4,13 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Search, ShoppingBag, Menu, X, User, LogIn, Crown, LayoutDashboard } from 'lucide-react';
 
-// Mock user data - replace with actual auth context
-const mockUser = {
-  name: 'Alex Rivera',
-  role: 'seller', // 'buyer', 'admin', 'guest'
-  avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=alex',
-};
-
 const Logo = ({ scrolled, isHomePage }) => (
   <Link to="/" className="flex items-center gap-2">
     <svg 
@@ -30,18 +23,24 @@ const Logo = ({ scrolled, isHomePage }) => (
         </linearGradient>
       </defs>
     </svg>
-    <span className={`font-serif text-xl font-bold transition-colors ${!isHomePage || scrolled ? 'text-black' : 'text-cream'}`}>94mercato</span>
+    <span className={`font-serif text-xl font-bold transition-colors ${!isHomePage || scrolled ? 'text-stone-900' : 'text-white'}`}>
+      94<span className={!isHomePage || scrolled ? "text-stone-500" : "text-champagne"}>mercato</span>
+    </span>
   </Link>
 );
 
 const Navigation = ({ links, scrolled, isHomePage }) => (
-  <nav className="hidden lg:flex items-center gap-6">
+  <nav className="hidden lg:flex items-center gap-1">
     {links.map((link) => (
       <NavLink
         key={link.to}
         to={link.to}
         className={({ isActive }) =>
-          `relative text-sm font-medium transition-colors after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:w-full after:scale-x-0 after:origin-center after:bg-current after:transition-transform hover:after:scale-x-100 ${isActive ? 'after:scale-x-100' : ''} ${!isHomePage || scrolled ? 'text-black !bg-clip-border' : 'text-cream/80 hover:text-cream'}`
+          `px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+            isActive
+              ? (!isHomePage || scrolled ? 'bg-stone-100 text-stone-900' : 'bg-white/20 text-white')
+              : (!isHomePage || scrolled ? 'text-stone-700 hover:text-stone-900 hover:bg-stone-100' : 'text-cream/80 hover:text-cream hover:bg-white/10')
+          }`
         }
       >
         {link.label}
@@ -117,7 +116,7 @@ export const Header = () => {
     setMobileMenuOpen(false); // Close mobile menu on route change
   }, [location.pathname]);
 
-  const user = mockUser; // Replace with auth context logic
+  const user = null; // Replace with auth context logic
   const navLinks = getNavigationLinks(user);
 
   const headerClasses = `
