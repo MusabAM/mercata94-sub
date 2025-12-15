@@ -30,7 +30,7 @@ const Logo = ({ scrolled, isHomePage }) => (
         </linearGradient>
       </defs>
     </svg>
-    <span className={`font-serif text-xl font-bold transition-colors ${!isHomePage || scrolled ? 'text-foreground' : 'text-cream'}`}>94mercato</span>
+    <span className={`font-serif text-xl font-bold transition-colors ${!isHomePage || scrolled ? 'text-black' : 'text-cream'}`}>94mercato</span>
   </Link>
 );
 
@@ -41,7 +41,7 @@ const Navigation = ({ links, scrolled, isHomePage }) => (
         key={link.to}
         to={link.to}
         className={({ isActive }) =>
-          `relative text-sm font-medium transition-colors after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:w-full after:scale-x-0 after:origin-center after:bg-current after:transition-transform hover:after:scale-x-100 ${isActive ? 'after:scale-x-100' : ''} ${!isHomePage || scrolled ? 'text-foreground' : 'text-cream/80 hover:text-cream'}`
+          `relative text-sm font-medium transition-colors after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:w-full after:scale-x-0 after:origin-center after:bg-current after:transition-transform hover:after:scale-x-100 ${isActive ? 'after:scale-x-100' : ''} ${!isHomePage || scrolled ? 'text-black' : 'text-cream/80 hover:text-cream'}`
         }
       >
         {link.label}
@@ -52,10 +52,10 @@ const Navigation = ({ links, scrolled, isHomePage }) => (
 
 const HeaderActions = ({ user, scrolled, isHomePage }) => (
   <div className="flex items-center gap-3">
-    <Button variant="ghost" size="icon" className={`transition-colors ${!isHomePage || scrolled ? 'text-foreground hover:bg-muted' : 'text-cream/80 hover:bg-white/10'}`}>
+    <Button variant="ghost" size="icon" className={`transition-colors ${!isHomePage || scrolled ? 'text-black hover:bg-muted' : 'text-cream/80 hover:bg-white/10'}`}>
       <Search className="h-5 w-5" />
     </Button>
-    <Button variant="ghost" size="icon" className={`relative transition-colors ${!isHomePage || scrolled ? 'text-foreground hover:bg-muted' : 'text-cream/80 hover:bg-white/10'}`}>
+    <Button variant="ghost" size="icon" className={`relative transition-colors ${!isHomePage || scrolled ? 'text-black hover:bg-muted' : 'text-cream/80 hover:bg-white/10'}`}>
       <ShoppingBag className="h-5 w-5" />
       <Badge className="absolute -top-1 -right-1 h-4 w-4 justify-center p-0 text-xs bg-champagne text-black">3</Badge>
     </Button>
@@ -63,7 +63,7 @@ const HeaderActions = ({ user, scrolled, isHomePage }) => (
       <Link to="/dashboard" className="flex items-center gap-2 pl-2">
         <img src={user.avatar} alt={user.name} className="h-8 w-8 rounded-full border-2 border-champagne/50" />
         <div className="hidden md:block">
-          <p className={`text-sm font-medium ${!isHomePage || scrolled ? 'text-foreground' : 'text-cream'}`}>{user.name}</p>
+          <p className={`text-sm font-medium ${!isHomePage || scrolled ? 'text-black' : 'text-cream'}`}>{user.name}</p>
           <p className={`text-xs capitalize ${!isHomePage || scrolled ? 'text-muted-foreground' : 'text-cream/60'}`}>{user.role}</p>
         </div>
       </Link>
@@ -140,7 +140,7 @@ export const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className={`lg:hidden transition-colors ${!isHomePage || scrolled ? 'text-foreground' : 'text-cream'}`}
+            className={`lg:hidden transition-colors ${!isHomePage || scrolled ? 'text-black' : 'text-cream'}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
