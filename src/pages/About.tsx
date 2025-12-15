@@ -21,7 +21,7 @@ const values = [
     icon: Shield,
     title: "Trust & Security",
     description:
-      "Secure payments, verified sellers, and buyer protection. We\'ve built trust into every transaction.",
+      "Secure payments, verified sellers, and buyer protection. We're building a foundation of trust.",
   },
 ];
 
@@ -93,43 +93,19 @@ const About = () => {
                 </p>
                 <p className="text-muted-foreground">
                   In a world flooded with digital content, we curate. Every
-                  product on our platform meets our standards for quality,
-                  originality, and craftsmanship. This isn\'t just another
-                  marketplace — it\'s a gallery of the best digital creation has
+                  product on our platform will meet our standards for quality,
+                  originality, and craftsmanship. This isn't just another
+                  marketplace — it's a gallery of the best digital creation has
                   to offer.
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 <div className="glass-card-elevated p-8 text-center">
                   <p className="text-4xl font-serif font-bold text-champagne">
-                    2,500+
+                    Just Launched
                   </p>
                   <p className="text-sm text-muted-foreground mt-2">
-                    Premium Products
-                  </p>
-                </div>
-                <div className="glass-card-elevated p-8 text-center">
-                  <p className="text-4xl font-serif font-bold text-champagne">
-                    850+
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Verified Sellers
-                  </p>
-                </div>
-                <div className="glass-card-elevated p-8 text-center">
-                  <p className="text-4xl font-serif font-bold text-champagne">
-                    50K+
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Happy Customers
-                  </p>
-                </div>
-                <div className="glass-card-elevated p-8 text-center">
-                  <p className="text-4xl font-serif font-bold text-champagne">
-                    4.9
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Average Rating
+                    Join us on our journey!
                   </p>
                 </div>
               </div>
@@ -220,9 +196,11 @@ const About = () => {
               creating tools and platforms that empower creators worldwide.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <Button variant="champagne" size="xl" className="text-foreground">
-                Start Selling
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <Button variant="champagne" size="xl" className="text-foreground" asChild>
+                <Link to="/sell">
+                  Start Selling
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
               <Button
                 variant="luxury-outline"

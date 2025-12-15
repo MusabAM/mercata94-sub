@@ -60,18 +60,18 @@ export function Hero() {
             {/* Stats */}
             <div className="flex items-center gap-8 pt-8 animate-fade-up delay-400">
               <div>
-                <p className="text-3xl font-serif font-medium text-cream">2,500+</p>
+                <p className="text-3xl font-serif font-medium text-cream">Curated</p>
                 <p className="text-sm text-cream/50">Premium Products</p>
               </div>
               <div className="w-px h-12 bg-sapphire/30" />
               <div>
-                <p className="text-3xl font-serif font-medium text-cream">850+</p>
+                <p className="text-3xl font-serif font-medium text-cream">Select</p>
                 <p className="text-sm text-cream/50">Verified Sellers</p>
               </div>
               <div className="w-px h-12 bg-sapphire/30" />
               <div>
-                <p className="text-3xl font-serif font-medium text-cream">50K+</p>
-                <p className="text-sm text-cream/50">Happy Customers</p>
+                <p className="text-3xl font-serif font-medium text-cream">Growing</p>
+                <p className="text-sm text-cream/50">Community</p>
               </div>
             </div>
           </div>
@@ -96,7 +96,7 @@ export function Hero() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-cream">New This Week</p>
-                    <p className="text-xs text-cream/50">124 products added</p>
+                    <p className="text-xs text-cream/50">Fresh products weekly</p>
                   </div>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export function Hero() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-cream">Top Rated</p>
-                    <p className="text-xs text-cream/50">4.9 avg rating</p>
+                    <p className="text-xs text-cream/50">Quality focus</p>
                   </div>
                 </div>
               </div>

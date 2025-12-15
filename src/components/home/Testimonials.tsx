@@ -1,40 +1,4 @@
-import { Star } from "lucide-react";
-
-const testimonials = [
-  {
-    id: 1,
-    content:
-      "94mercato has transformed how I sell my design assets. The platform is elegant, the commission is fair, and my sales have tripled since joining.",
-    author: {
-      name: "Sarah Chen",
-      role: "UI Designer",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=sarah",
-    },
-    rating: 5,
-  },
-  {
-    id: 2,
-    content:
-      "As a buyer, I love the curated selection. Every product I've purchased has exceeded expectations. The quality here is unmatched.",
-    author: {
-      name: "Michael Torres",
-      role: "Creative Director",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=michael",
-    },
-    rating: 5,
-  },
-  {
-    id: 3,
-    content:
-      "The seller dashboard is intuitive and the analytics help me understand what my customers want. Best platform for digital creators.",
-    author: {
-      name: "Emma Wright",
-      role: "Template Designer",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=emma",
-    },
-    rating: 5,
-  },
-];
+import { Button } from "@/components/ui/button";
 
 export function Testimonials() {
   return (
@@ -45,57 +9,21 @@ export function Testimonials() {
       
       <div className="container-luxury relative z-10">
         {/* Section header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto">
           <span className="text-xs tracking-widest uppercase text-champagne">
-            Testimonials
+            Community Feedback
           </span>
           <h2 className="heading-large mt-3 mb-4 text-cream">
-            Loved by Creators
+            Help Us Grow
           </h2>
-          <p className="text-cream/60">
-            See what our community of sellers and buyers have to say about their
-            experience with 94mercato.
+          <p className="text-cream/60 mb-8">
+            We're just getting started, and your feedback is crucial in helping us build the best platform for digital creators. Share your experience and help shape the future of 94mercato.
           </p>
-        </div>
-
-        {/* Testimonials grid */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={testimonial.id}
-              className={`midnight-glass p-8 animate-fade-up delay-${(index + 1) * 100}`}
-            >
-              {/* Rating */}
-              <div className="flex gap-1 mb-6">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-4 w-4 text-champagne fill-current"
-                  />
-                ))}
-              </div>
-
-              {/* Content */}
-              <blockquote className="text-cream mb-8 leading-relaxed">
-                "{testimonial.content}"
-              </blockquote>
-
-              {/* Author */}
-              <div className="flex items-center gap-4 pt-6 border-t border-sapphire/20">
-                <img
-                  src={testimonial.author.avatar}
-                  alt={testimonial.author.name}
-                  className="w-12 h-12 rounded-full bg-midnight border border-sapphire/30"
-                />
-                <div>
-                  <p className="font-medium text-cream">{testimonial.author.name}</p>
-                  <p className="text-sm text-cream/50">
-                    {testimonial.author.role}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+          <Button variant="champagne-outline" size="lg" asChild>
+            <a href="/contact">
+              Share Your Feedback
+            </a>
+          </Button>
         </div>
       </div>
     </section>

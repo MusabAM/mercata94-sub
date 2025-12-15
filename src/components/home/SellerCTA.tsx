@@ -10,8 +10,8 @@ const benefits = [
   },
   {
     icon: DollarSign,
-    title: "Fair Commission",
-    description: "Keep 85% of every sale with transparent pricing",
+    title: "Competitive Commission",
+    description: "Generous commission rates for our valued sellers",
   },
   {
     icon: BarChart3,
@@ -41,8 +41,7 @@ export function SellerCTA() {
                 <span className="gradient-text">Into Revenue</span>
               </h2>
               <p className="text-cream/60 text-lg max-w-md">
-                Join a community of 850+ verified sellers and reach thousands of 
-                customers looking for premium digital products.
+                Join our growing community of creators and reach customers looking for premium digital products.
               </p>
             </div>
 
@@ -73,11 +72,6 @@ export function SellerCTA() {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button variant="sapphire-outline" size="xl" asChild>
-                <Link to="/pricing">
-                  View Pricing
-                </Link>
-              </Button>
             </div>
           </div>
 
@@ -88,13 +82,12 @@ export function SellerCTA() {
               {/* Stats card */}
               <div className="midnight-glass p-6 max-w-sm ml-auto animate-slide-up">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm text-cream/60">This Month</span>
-                  <span className="text-xs text-champagne bg-champagne/10 px-2 py-1 rounded-full">+24%</span>
+                  <span className="text-sm text-cream/60">Your Dashboard</span>
                 </div>
                 <p className="text-4xl font-serif font-medium text-cream mb-2">
-                  ₹1,24,500
+                  Track Your
                 </p>
-                <p className="text-sm text-cream/50">Total Earnings</p>
+                <p className="text-sm text-cream/50">Earnings & Growth</p>
               </div>
 
               {/* Recent sale notification */}
@@ -105,7 +98,7 @@ export function SellerCTA() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-cream">New Sale!</p>
-                    <p className="text-xs text-cream/50">UI Kit — ₹4,999</p>
+                    <p className="text-xs text-cream/50">Get notified instantly</p>
                   </div>
                 </div>
               </div>
@@ -125,8 +118,8 @@ export function SellerCTA() {
                     ))}
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-cream">4.9 Rating</p>
-                    <p className="text-xs text-cream/50">128 reviews</p>
+                    <p className="text-sm font-medium text-cream">Build Your Rating</p>
+                    <p className="text-xs text-cream/50">Earn customer trust</p>
                   </div>
                 </div>
               </div>
