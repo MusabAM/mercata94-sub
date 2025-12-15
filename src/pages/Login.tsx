@@ -14,7 +14,7 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement authentication with Supabase Auth
+    alert("Login functionality is not yet implemented.");
   };
 
   return (

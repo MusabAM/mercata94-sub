@@ -129,7 +129,7 @@ export const Header = () => {
     container-luxury flex items-center justify-between transition-all duration-300
     ${!isHomePage || scrolled ? 'h-16' : 'h-20'}
   `;
-// minor change
+
   return (
     <header className={headerClasses}>
       <div className={containerClasses}>
@@ -170,7 +170,7 @@ export const Header = () => {
             </MobileNavLink>
 
             {navLinks.map(link => (
-              <MobileNavLink key={link.to} to={link.to} close.setMobileMenuOpen(false)}>
+              <MobileNavLink key={link.to} to={link.to} closeMenu={() => setMobileMenuOpen(false)}>
                  {/* A simple switch for icons, can be improved */}
                 {link.label === 'Products' && <Crown className="h-5 w-5" />}
                 {link.label === 'Sell' && <LogIn className="h-5 w-5" />}
