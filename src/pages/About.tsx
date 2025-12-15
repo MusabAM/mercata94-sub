@@ -21,30 +21,20 @@ const values = [
     icon: Shield,
     title: "Trust & Security",
     description:
-      "Secure payments, verified sellers, and buyer protection. We've built trust into every transaction.",
+      "Secure payments, verified sellers, and buyer protection. We\'ve built trust into every transaction.",
   },
 ];
 
 const team = [
   {
-    name: "Alex Rivera",
-    role: "Founder & CEO",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=alex",
+    name: "Jeroen Benny",
+    role: "Founder",
+    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jeroen",
   },
   {
-    name: "Sarah Chen",
-    role: "Head of Design",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=sarchen",
-  },
-  {
-    name: "Marcus Johnson",
-    role: "Head of Product",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=marcus",
-  },
-  {
-    name: "Emma Williams",
-    role: "Head of Community",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=emmaw",
+    name: "Farhan",
+    role: "COO",
+    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Farhan",
   },
 ];
 
@@ -104,8 +94,8 @@ const About = () => {
                 <p className="text-muted-foreground">
                   In a world flooded with digital content, we curate. Every
                   product on our platform meets our standards for quality,
-                  originality, and craftsmanship. This isn't just another
-                  marketplace — it's a gallery of the best digital creation has
+                  originality, and craftsmanship. This isn\'t just another
+                  marketplace — it\'s a gallery of the best digital creation has
                   to offer.
                 </p>
               </div>
@@ -195,7 +185,7 @@ const About = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-2 gap-8">
               {team.map((member, index) => (
                 <div
                   key={member.name}
