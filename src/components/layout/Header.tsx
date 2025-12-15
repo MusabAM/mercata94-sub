@@ -140,7 +140,7 @@ export const Header = () => {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 top-16 z-40 bg-midnight/90 backdrop-blur-xl animate-fade-in lg:hidden"
+          className={`fixed inset-0 z-40 bg-midnight/90 backdrop-blur-xl animate-fade-in lg:hidden ${scrolled ? 'top-16' : 'top-20'}`}
         >
           <div className="container-luxury pt-8 space-y-4">
             {user ? (
