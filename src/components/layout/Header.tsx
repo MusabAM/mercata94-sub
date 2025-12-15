@@ -11,7 +11,7 @@ const mockUser = {
   avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=alex',
 };
 
-const Logo = ({ scrolled }) => (
+const Logo = ({ scrolled, isHomePage }) => (
   <Link to="/" className="flex items-center gap-2">
     <svg 
       className={`h-8 w-auto transition-all duration-300 ${scrolled ? 'h-7' : 'h-8'}`}
@@ -30,18 +30,18 @@ const Logo = ({ scrolled }) => (
         </linearGradient>
       </defs>
     </svg>
-    <span className={`font-serif text-xl font-bold transition-colors ${scrolled ? 'text-foreground' : 'text-cream'}`}>94mercato</span>
+    <span className={`font-serif text-xl font-bold transition-colors ${!isHomePage || scrolled ? 'text-foreground' : 'text-cream'}`}>94mercato</span>
   </Link>
 );
 
-const Navigation = ({ links, scrolled }) => (
+const Navigation = ({ links, scrolled, isHomePage }) => (
   <nav className="hidden lg:flex items-center gap-6">
     {links.map((link) => (
       <NavLink
         key={link.to}
         to={link.to}
         className={({ isActive }) =>
-          `relative text-sm font-medium transition-colors after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:w-full after:scale-x-0 after:origin-center after:bg-current after:transition-transform hover:after:scale-x-100 ${isActive ? 'after:scale-x-100' : ''} ${scrolled ? 'text-foreground' : 'text-cream/80 hover:text-cream'}`
+          `relative text-sm font-medium transition-colors after:absolute after:left-0 after:bottom-[-4px] after:h-[2px] after:w-full after:scale-x-0 after:origin-center after:bg-current after:transition-transform hover:after:scale-x-100 ${isActive ? 'after:scale-x-100' : ''} ${!isHomePage || scrolled ? 'text-foreground' : 'text-cream/80 hover:text-cream'}`
         }
       >
         {link.label}
@@ -50,12 +50,12 @@ const Navigation = ({ links, scrolled }) => (
   </nav>
 );
 
-const HeaderActions = ({ user, scrolled }) => (
+const HeaderActions = ({ user, scrolled, isHomePage }) => (
   <div className="flex items-center gap-3">
-    <Button variant="ghost" size="icon" className={`transition-colors ${scrolled ? 'text-foreground hover:bg-muted' : 'text-cream/80 hover:bg-white/10'}`}>
+    <Button variant="ghost" size="icon" className={`transition-colors ${!isHomePage || scrolled ? 'text-foreground hover:bg-muted' : 'text-cream/80 hover:bg-white/10'}`}>
       <Search className="h-5 w-5" />
     </Button>
-    <Button variant="ghost" size="icon" className={`relative transition-colors ${scrolled ? 'text-foreground hover:bg-muted' : 'text-cream/80 hover:bg-white/10'}`}>
+    <Button variant="ghost" size="icon" className={`relative transition-colors ${!isHomePage || scrolled ? 'text-foreground hover:bg-muted' : 'text-cream/80 hover:bg-white/10'}`}>
       <ShoppingBag className="h-5 w-5" />
       <Badge className="absolute -top-1 -right-1 h-4 w-4 justify-center p-0 text-xs bg-champagne text-black">3</Badge>
     </Button>
@@ -63,8 +63,8 @@ const HeaderActions = ({ user, scrolled }) => (
       <Link to="/dashboard" className="flex items-center gap-2 pl-2">
         <img src={user.avatar} alt={user.name} className="h-8 w-8 rounded-full border-2 border-champagne/50" />
         <div className="hidden md:block">
-          <p className={`text-sm font-medium ${scrolled ? 'text-foreground' : 'text-cream'}`}>{user.name}</p>
-          <p className={`text-xs capitalize ${scrolled ? 'text-muted-foreground' : 'text-cream/60'}`}>{user.role}</p>
+          <p className={`text-sm font-medium ${!isHomePage || scrolled ? 'text-foreground' : 'text-cream'}`}>{user.name}</p>
+          <p className={`text-xs capitalize ${!isHomePage || scrolled ? 'text-muted-foreground' : 'text-cream/60'}`}>{user.role}</p>
         </div>
       </Link>
     ) : (
@@ -103,6 +103,7 @@ export const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -119,17 +120,27 @@ export const Header = () => {
   const user = mockUser; // Replace with auth context logic
   const navLinks = getNavigationLinks(user);
 
+  const headerClasses = `
+    fixed top-0 left-0 right-0 z-50 transition-all duration-300
+    ${!isHomePage || scrolled ? 'bg-background/80 backdrop-blur-lg border-b border-border shadow-sm' : 'bg-transparent'}
+  `;
+
+  const containerClasses = `
+    container-luxury flex items-center justify-between transition-all duration-300
+    ${!isHomePage || scrolled ? 'h-16' : 'h-20'}
+  `;
+
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-lg border-b border-border shadow-sm' : 'bg-transparent'}`}>
-      <div className="container-luxury flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-16' : 'h-20'}`}>
-        <Logo scrolled={scrolled} />
-        <Navigation links={navLinks} scrolled={scrolled} />
+    <header className={headerClasses}>
+      <div className={containerClasses}>
+        <Logo scrolled={scrolled} isHomePage={isHomePage} />
+        <Navigation links={navLinks} scrolled={scrolled} isHomePage={isHomePage} />
         <div className="flex items-center gap-2">
-          <HeaderActions user={user} scrolled={scrolled} />
+          <HeaderActions user={user} scrolled={scrolled} isHomePage={isHomePage} />
           <Button
             variant="ghost"
             size="icon"
-            className={`lg:hidden transition-colors ${scrolled ? 'text-foreground' : 'text-cream'}`}
+            className={`lg:hidden transition-colors ${!isHomePage || scrolled ? 'text-foreground' : 'text-cream'}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -140,7 +151,7 @@ export const Header = () => {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div 
-          className={`fixed inset-0 z-40 bg-midnight/90 backdrop-blur-xl animate-fade-in lg:hidden ${scrolled ? 'top-16' : 'top-20'}`}
+          className={`fixed inset-0 z-40 bg-midnight/90 backdrop-blur-xl animate-fade-in lg:hidden ${!isHomePage || scrolled ? 'top-16' : 'top-20'}`}
         >
           <div className="container-luxury pt-8 space-y-4">
             {user ? (
