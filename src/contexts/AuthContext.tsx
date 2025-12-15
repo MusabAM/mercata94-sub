@@ -20,45 +20,52 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Define a type for mock users that includes a password
+type MockUser = User & { password?: string };
+
 // Mock users for development
-const mockUsers: Record<string, User> = {
+const mockUsers: Record<string, MockUser> = {
   admin: {
     id: "admin-001",
-    email: "admin@mercato94.com",
+    email: "outbrix94@gmail.com",
     name: "Admin User",
     role: "admin",
+    password: "jeroen",
   },
   seller: {
     id: "seller-001",
     email: "seller@mercato94.com",
     name: "Seller User",
     role: "seller",
+    password: "password123",
   },
   buyer: {
     id: "buyer-001",
     email: "buyer@mercato94.com",
     name: "Buyer User",
     role: "buyer",
+    password: "password123",
   },
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(mockUsers.admin); // Default to admin for dev
+  const [user, setUser] = useState<User | null>(null); // Default to no user logged in
 
   const isAdmin = user?.role === "admin";
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    // Mock login - in production, this would call an API
-    if (email.includes("admin")) {
-      setUser(mockUsers.admin);
-      return true;
-    } else if (email.includes("seller")) {
-      setUser(mockUsers.seller);
-      return true;
-    } else {
-      setUser(mockUsers.buyer);
+    // Mock login - now checks email and password
+    const userToLogin = Object.values(mockUsers).find(
+      (u) => u.email === email && u.password === password
+    );
+
+    if (userToLogin) {
+      const { password, ...userWithoutPassword } = userToLogin;
+      setUser(userWithoutPassword);
       return true;
     }
+    
+    return false;
   };
 
   const logout = () => {
@@ -66,7 +73,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const setMockUser = (role: UserRole) => {
-    setUser(mockUsers[role]);
+    const mockUserToSet = mockUsers[role];
+    if(mockUserToSet) {
+      const { password, ...userWithoutPassword } = mockUserToSet;
+      setUser(userWithoutPassword);
+    }
   };
 
   return (
