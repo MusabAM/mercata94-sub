@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Search, ShoppingBag, Menu, X, User, LogIn, Crown, LayoutDashboard } from 'lucide-react';
+import { Search, ShoppingBag, Menu, X, User, LogIn, LogOut, Crown, LayoutDashboard } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Logo = () => (
   <Link to="/" className="flex items-center gap-2">
@@ -49,36 +50,45 @@ const Navigation = ({ links }) => (
   </nav>
 );
 
-const HeaderActions = ({ user }) => (
-  <div className="flex items-center gap-3">
-    <Button variant="ghost" size="icon" className="text-cream/70 hover:text-cream hover:bg-sapphire/10">
-      <Search className="h-5 w-5" />
-    </Button>
-    <Button variant="ghost" size="icon" className="relative text-cream/70 hover:text-cream hover:bg-sapphire/10">
-      <ShoppingBag className="h-5 w-5" />
-      <Badge className="absolute -top-1 -right-1 h-4 w-4 justify-center p-0 text-xs bg-champagne text-black">3</Badge>
-    </Button>
-    {user ? (
-      <Link to="/dashboard" className="flex items-center gap-2 pl-2">
-        <img src={user.avatar} alt={user.name} className="h-8 w-8 rounded-full border-2 border-champagne/50" />
-        <div className="hidden md:block">
-          <p className="text-sm font-medium text-cream">{user.name}</p>
-          <p className="text-xs capitalize text-cream/60">{user.role}</p>
-        </div>
-      </Link>
-    ) : (
-      <Button asChild variant="champagne" className="hidden lg:flex">
-        <Link to="/login">
-          <LogIn className="h-4 w-4 mr-2" />
-          Login
-        </Link>
+const HeaderActions = () => {
+  const { user, logout } = useAuth();
+  
+  return (
+    <div className="flex items-center gap-3">
+      <Button variant="ghost" size="icon" className="text-cream/70 hover:text-cream hover:bg-sapphire/10">
+        <Search className="h-5 w-5" />
       </Button>
-    )}
-    <div className="lg:hidden">
-      {/* Mobile Menu Toggle will be handled in the main component */}
+      <Button variant="ghost" size="icon" className="relative text-cream/70 hover:text-cream hover:bg-sapphire/10">
+        <ShoppingBag className="h-5 w-5" />
+        <Badge className="absolute -top-1 -right-1 h-4 w-4 justify-center p-0 text-xs bg-champagne text-black">3</Badge>
+      </Button>
+      {user ? (
+        <div className="flex items-center gap-2">
+          <Link to={user.role === 'admin' ? '/admin' : '/dashboard'} className="flex items-center gap-2 pl-2">
+            <img src={user.avatar} alt={user.name} className="h-8 w-8 rounded-full border-2 border-champagne/50" />
+            <div className="hidden md:block">
+              <p className="text-sm font-medium text-cream">{user.name}</p>
+              <p className="text-xs capitalize text-cream/60">{user.role}</p>
+            </div>
+          </Link>
+          <Button variant="ghost" size="icon" onClick={logout} className="text-cream/70 hover:text-cream hover:bg-sapphire/10">
+            <LogOut className="h-5 w-5" />
+          </Button>
+        </div>
+      ) : (
+        <Button asChild variant="champagne" className="hidden lg:flex">
+          <Link to="/login">
+            <LogIn className="h-4 w-4 mr-2" />
+            Login
+          </Link>
+        </Button>
+      )}
+      <div className="lg:hidden">
+        {/* Mobile Menu Toggle will be handled in the main component */}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const MobileNavLink = ({ to, children, closeMenu }) => (
   <Link 
@@ -101,13 +111,12 @@ const getNavigationLinks = (user) => [
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, logout } = useAuth();
+  const navLinks = getNavigationLinks(user);
 
   useEffect(() => {
     setMobileMenuOpen(false); // Close mobile menu on route change
   }, [location.pathname]);
-
-  const user = null; // Replace with auth context logic
-  const navLinks = getNavigationLinks(user);
 
   const headerClasses = "fixed top-0 left-0 right-0 z-50 h-16 bg-midnight border-b border-sapphire/20";
   const containerClasses = "container-luxury flex items-center justify-between h-full";
@@ -118,7 +127,7 @@ export const Header = () => {
         <Logo />
         <Navigation links={navLinks} />
         <div className="flex items-center gap-2">
-          <HeaderActions user={user} />
+          <HeaderActions />
           <Button
             variant="ghost"
             size="icon"
@@ -137,12 +146,17 @@ export const Header = () => {
         >
           <div className="container-luxury pt-8 space-y-4">
             {user ? (
-              <div className="flex items-center gap-3 border-b border-white/10 pb-6 mb-6">
-                <img src={user.avatar} alt={user.name} className="h-12 w-12 rounded-full" />
-                <div>
-                  <p className="text-lg font-medium text-cream">{user.name}</p>
-                  <p className="text-sm capitalize text-cream/60">{user.role}</p>
-                </div>
+              <div className="flex items-center justify-between border-b border-white/10 pb-6 mb-6">
+                <Link to={user.role === 'admin' ? '/admin' : '/dashboard'} className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
+                  <img src={user.avatar} alt={user.name} className="h-12 w-12 rounded-full" />
+                  <div>
+                    <p className="text-lg font-medium text-cream">{user.name}</p>
+                    <p className="text-sm capitalize text-cream/60">{user.role}</p>
+                  </div>
+                </Link>
+                <Button variant="ghost" size="icon" onClick={() => { logout(); setMobileMenuOpen(false); }}>
+                  <LogOut className="h-6 w-6 text-cream/70"/>
+                </Button>
               </div>
             ) : null}
             
@@ -153,7 +167,6 @@ export const Header = () => {
 
             {navLinks.map(link => (
               <MobileNavLink key={link.to} to={link.to} closeMenu={() => setMobileMenuOpen(false)}>
-                 {/* A simple switch for icons, can be improved */}
                 {link.label === 'Products' && <Crown className="h-5 w-5" />}
                 {link.label === 'Sell' && <LogIn className="h-5 w-5" />}
                 {link.label === 'About' && <User className="h-5 w-5" />}

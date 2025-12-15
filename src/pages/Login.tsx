@@ -3,18 +3,33 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Login functionality is not yet implemented.");
+    setError("");
+
+    if (email === "outbrix94@gmail.com" && password === "jeroen") {
+      login({ 
+        name: "Jeroen", 
+        role: "admin",
+        avatar: "https://i.pravatar.cc/150?u=jeroen"
+      });
+      navigate("/admin");
+    } else {
+      setError("Invalid email or password");
+    }
   };
 
   return (
@@ -39,6 +54,11 @@ const Login = () => {
 
               <div className="glass-card-elevated p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {error && (
+                    <div className="bg-red-500/10 border border-red-500/20 text-red-700 p-3 rounded-md text-sm">
+                      {error}
+                    </div>
+                  )}
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
