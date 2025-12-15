@@ -29,12 +29,12 @@ const team = [
   {
     name: "Jeroen Benny",
     role: "Founder",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jeroen",
+    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jeroen&topType=ShortHairShortFlat&facialHairType=BeardLight",
   },
   {
     name: "Farhan",
     role: "COO",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Farhan",
+    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Farhan&topType=ShortHairFrizzle&facialHairType=MoustacheMagnum",
   },
 ];
 
