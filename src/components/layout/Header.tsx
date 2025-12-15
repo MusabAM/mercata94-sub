@@ -129,7 +129,7 @@ export const Header = () => {
     container-luxury flex items-center justify-between transition-all duration-300
     ${!isHomePage || scrolled ? 'h-16' : 'h-20'}
   `;
-
+// minor change
   return (
     <header className={headerClasses}>
       <div className={containerClasses}>
