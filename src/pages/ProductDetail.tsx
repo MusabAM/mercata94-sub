@@ -3,6 +3,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Helmet } from "react-helmet-async";
+import { useState, useEffect } from "react";
 import {
   Star,
   ShoppingCart,
@@ -19,6 +20,7 @@ import ebookTemplate from "@/assets/products/ebook-template.png";
 import uiKit from "@/assets/products/ui-kit.png";
 import courseBundle from "@/assets/products/course-bundle.png";
 import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const products: Record<string, any> = {
   "modern-ebook-template": {
@@ -51,6 +53,24 @@ const products: Record<string, any> = {
     rating: 4.9,
     sales: 342,
     reviews: 128,
+    reviewsData: [
+        {
+            id: 1,
+            author: "Alice",
+            avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=alice",
+            rating: 5,
+            comment: "This template is amazing! Saved me so much time and the design is top-notch.",
+            date: "2 weeks ago"
+        },
+        {
+            id: 2,
+            author: "Bob",
+            avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=bob",
+            rating: 4,
+            comment: "Great starting point for my e-book. A few more color options would have been nice, but overall very happy with it.",
+            date: "1 month ago"
+        }
+    ],
     includes: [
       "50+ Unique Page Layouts",
       "Figma, Sketch & Notion Files",
@@ -91,6 +111,16 @@ const products: Record<string, any> = {
     rating: 4.8,
     sales: 189,
     reviews: 67,
+    reviewsData: [
+        {
+            id: 1,
+            author: "Charlie",
+            avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=charlie",
+            rating: 5,
+            comment: "Absolutely essential for any Figma designer. The components are well-organized and easy to adapt.",
+            date: "3 days ago"
+        }
+    ],
     includes: [
       "500+ UI Components",
       "Dark & Light Modes",
@@ -131,6 +161,7 @@ const products: Record<string, any> = {
     rating: 5.0,
     sales: 567,
     reviews: 234,
+    reviewsData: [],
     includes: [
       "40+ Hours of Content",
       "Project Files",
@@ -142,10 +173,101 @@ const products: Record<string, any> = {
   },
 };
 
+const ProductDetailSkeleton = () => {
+    return (
+      <Layout>
+        {/* Breadcrumb skeleton */}
+        <nav className="pt-24 pb-4 border-b border-border bg-stone/20">
+          <div className="container-luxury">
+            <div className="flex items-center gap-2 text-sm">
+              <Skeleton className="h-4 w-16" />
+              <ChevronRight className="h-4 w-4 text-muted" />
+              <Skeleton className="h-4 w-20" />
+              <ChevronRight className="h-4 w-4 text-muted" />
+              <Skeleton className="h-4 w-32" />
+            </div>
+          </div>
+        </nav>
+  
+        {/* Product content skeleton */}
+        <section className="section-padding">
+          <div className="container-luxury">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+              {/* Left - Image skeleton */}
+              <div className="space-y-4">
+                <Skeleton className="aspect-square rounded-xl" />
+              </div>
+  
+              {/* Right - Info skeleton */}
+              <div className="space-y-8">
+                {/* Header skeleton */}
+                <div className="space-y-4">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-6 w-4/5" />
+                </div>
+  
+                {/* Rating & Stats skeleton */}
+                <div className="flex items-center gap-6 py-4 border-y border-border">
+                  <Skeleton className="h-6 w-32" />
+                  <Skeleton className="h-6 w-20" />
+                </div>
+  
+                {/* Price & CTA skeleton */}
+                <div className="space-y-4">
+                  <Skeleton className="h-10 w-40" />
+                  <div className="flex gap-3">
+                    <Skeleton className="h-14 flex-1" />
+                    <Skeleton className="h-14 w-14" />
+                    <Skeleton className="h-14 w-14" />
+                  </div>
+                </div>
+  
+                {/* What's included skeleton */}
+                <div className="space-y-4 p-6 rounded-xl bg-secondary/30">
+                  <Skeleton className="h-6 w-32 mb-4" />
+                  <div className="space-y-3">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-5/6" />
+                  </div>
+                </div>
+  
+                {/* Seller info skeleton */}
+                <div className="flex items-center justify-between p-6 rounded-xl border border-border">
+                  <div className="flex items-center gap-4">
+                    <Skeleton className="w-12 h-12 rounded-full" />
+                    <div>
+                      <Skeleton className="h-5 w-24 mb-2" />
+                      <Skeleton className="h-4 w-32" />
+                    </div>
+                  </div>
+                  <Skeleton className="h-9 w-24" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Layout>
+    );
+  };
+
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const addItem = useCartStore((state) => state.addItem);
-  const product = slug ? products[slug] : null;
+  
+  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState<any>(null);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  useEffect(() => {
+    // Simulate fetching data from a backend
+    setTimeout(() => {
+      const productData = slug ? products[slug] : null;
+      setProduct(productData);
+      setLoading(false);
+    }, 1500); // 1.5-second delay to showcase the skeleton
+  }, [slug]);
 
   const formatPrice = (price: number, currency: string) => {
     return new Intl.NumberFormat("en-IN", {
@@ -171,6 +293,29 @@ const ProductDetail = () => {
       description: `${product.title} has been added to your cart.`,
     });
   };
+
+  const handleAddToWishlist = () => {
+    if (!product) return;
+    const newWishlistedState = !isWishlisted;
+    setIsWishlisted(newWishlistedState);
+    toast.success(newWishlistedState ? "Added to wishlist" : "Removed from wishlist", {
+      description: `${product.title} has been ${newWishlistedState ? "added to" : "removed from"} your wishlist.`,
+    });
+  };
+  
+  const handleShare = () => {
+    if (!product) return;
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+      toast.success("Link copied!", {
+        description: "Product link copied to your clipboard.",
+      });
+    });
+  };
+
+  if (loading) {
+    return <ProductDetailSkeleton />;
+  }
 
   if (!product) {
     return (
@@ -314,11 +459,14 @@ const ProductDetail = () => {
                       <ShoppingCart className="h-5 w-5 mr-2" />
                       Add to Cart
                     </Button>
-                    <Button variant="luxury-outline" size="icon" className="h-14 w-14">
-                      <Heart className="h-5 w-5" />
+                    <Button variant="luxury-outline" size="icon" className="h-14 w-14" onClick={handleAddToWishlist}>
+                      <Heart 
+                        className={`h-5 w-5 transition-colors ${isWishlisted ? "text-red-500" : "text-foreground"}`}
+                        fill={isWishlisted ? "currentColor" : "none"}
+                      />
                     </Button>
-                    <Button variant="luxury-outline" size="icon" className="h-14 w-14">
-                      <Share2 className.tsx="h-5 w-5" />
+                    <Button variant="luxury-outline" size="icon" className="h-14 w-14" onClick={handleShare}>
+                      <Share2 className="h-5 w-5" />
                     </Button>
                   </div>
                 </div>
@@ -389,6 +537,43 @@ const ProductDetail = () => {
                 </pre>
               </div>
             </div>
+            
+            {/* Reviews Section */}
+            {product.reviewsData && product.reviewsData.length > 0 && (
+                <div className="mt-16 pt-16 border-t border-border">
+                <h2 className="heading-medium mb-6">Reviews ({product.reviews})</h2>
+                <div className="space-y-8">
+                    {product.reviewsData.map((review: any) => (
+                    <div key={review.id} className="flex gap-4">
+                        <img
+                        src={review.avatar}
+                        alt={review.author}
+                        className="w-12 h-12 rounded-full bg-secondary"
+                        />
+                        <div>
+                        <div className="flex items-center gap-2">
+                            <span className="font-medium">{review.author}</span>
+                            <span className="text-xs text-muted-foreground">{review.date}</span>
+                        </div>
+                        <div className="flex gap-0.5 mt-1">
+                            {[...Array(5)].map((_, i) => (
+                            <Star
+                                key={i}
+                                className={`h-4 w-4 ${
+                                i < review.rating
+                                    ? "text-champagne fill-current"
+                                    : "text-muted"
+                                }`}
+                            />
+                            ))}
+                        </div>
+                        <p className="mt-2 text-muted-foreground">{review.comment}</p>
+                        </div>
+                    </div>
+                    ))}
+                </div>
+                </div>
+            )}
 
             {/* Tags */}
             <div className="mt-12 flex items-center gap-3 flex-wrap">

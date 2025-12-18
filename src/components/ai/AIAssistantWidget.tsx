@@ -15,6 +15,13 @@ const suggestions = [
   "Can I use products commercially?",
 ];
 
+const cannedResponses: Record<string, string> = {
+    default: "I'm sorry, I can only answer questions about licenses, refunds, and commercial use at the moment. Please try one of the suggestions or contact support for other questions.",
+    license: "We offer two main licenses: a Standard License for personal or single commercial projects, and an Extended License for unlimited commercial projects. You can find more details on each product page.",
+    refund: "We offer a 14-day money-back guarantee on all our products. If you are not satisfied, you can request a refund within 14 days of purchase. Please contact support@mercato94.com to initiate the process.",
+    commercial: "Yes, all our products can be used for commercial purposes. The Standard License covers one commercial project, while the Extended License allows for unlimited commercial projects. Thank you for asking!",
+};
+
 export function AIAssistantWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -27,6 +34,20 @@ export function AIAssistantWidget() {
     },
   ]);
 
+  const getAIResponse = (userInput: string) => {
+    const lowerCaseInput = userInput.toLowerCase();
+    if (lowerCaseInput.includes("license")) {
+      return cannedResponses.license;
+    }
+    if (lowerCaseInput.includes("refund")) {
+        return cannedResponses.refund;
+    }
+    if (lowerCaseInput.includes("commercial")) {
+        return cannedResponses.commercial;
+    }
+    return cannedResponses.default;
+  }
+
   const handleSend = () => {
     if (!input.trim()) return;
 
@@ -37,6 +58,8 @@ export function AIAssistantWidget() {
     };
 
     setMessages([...messages, userMessage]);
+    
+    const aiResponseContent = getAIResponse(input);
     setInput("");
 
     // Simulate AI response
@@ -44,8 +67,7 @@ export function AIAssistantWidget() {
       const response: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content:
-          "Thanks for your question! Our team is working on connecting me to real AI capabilities. For now, please check our FAQ or contact support@mercato94.com for detailed assistance.",
+        content: aiResponseContent,
       };
       setMessages((prev) => [...prev, response]);
     }, 1000);
