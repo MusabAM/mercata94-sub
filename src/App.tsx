@@ -21,6 +21,7 @@ import BuyerDashboard from "./pages/BuyerDashboard";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Forbidden from "./pages/Forbidden";
+import Legal from "./pages/Legal";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -57,6 +58,7 @@ const App = () => (
               <Route path="/purchases" element={<BuyerDashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/403" element={<Forbidden />} />
+              <Route path="/legal" element={<Legal />} />
 
               {/* Admin Routes - Protected */}
               <Route
