@@ -18,7 +18,7 @@ const suggestions = [
 const cannedResponses: Record<string, string> = {
     default: "I'm sorry, I can only answer questions about licenses, refunds, and commercial use at the moment. Please try one of the suggestions or contact support for other questions.",
     license: "We offer two main licenses: a Standard License for personal or single commercial projects, and an Extended License for unlimited commercial projects. You can find more details on each product page.",
-    refund: "We offer a 14-day money-back guarantee on all our products. If you are not satisfied, you can request a refund within 14 days of purchase. Please contact support@mercato94.com to initiate the process.",
+    refund: "Due to the nature of digital products, we generally do not offer refunds. However, we will grant a refund if a file is corrupt, the product is misrepresented, or you received the wrong item. Please contact support@mercato94.com with your order number and a description of the issue to request a refund. You can view the complete policy on our Refund Policy page.",
     commercial: "Yes, all our products can be used for commercial purposes. The Standard License covers one commercial project, while the Extended License allows for unlimited commercial projects. Thank you for asking!",
 };
 
