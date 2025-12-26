@@ -1,7 +1,7 @@
+import { useState, useEffect } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { DataTable } from "@/components/admin/DataTable";
 import { StatusBadge } from "@/components/admin/StatusBadge";
-import { mockOrders, AdminOrder } from "@/data/mockAdminData";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,11 +9,49 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, Eye, RotateCcw, Receipt } from "lucide-react";
+import { MoreHorizontal, Eye, RotateCcw, Receipt, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import api from "@/lib/api";
+import { formatPrice } from "@/lib/utils";
+
+interface Order {
+  id: number;
+  productTitle: string;
+  buyerEmail: string;
+  buyerName: string;
+  amount: number;
+  status: string;
+  purchasedAt: string;
+  itemCount: number;
+}
 
 export default function AdminOrders() {
-  const handleAction = (action: string, order: AdminOrder) => {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch orders
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        setIsLoading(true);
+        const response = await api.get('/admin/orders?limit=100');
+        setOrders(response.data.orders || []);
+      } catch (err: any) {
+        console.error('Error fetching orders:', err);
+        toast({
+          title: "Error",
+          description: "Failed to load orders.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  const handleAction = (action: string, order: Order) => {
     toast({
       title: `Action: ${action}`,
       description: `Order #${order.id}`,
@@ -24,14 +62,14 @@ export default function AdminOrders() {
     {
       key: "id",
       header: "Order ID",
-      render: (order: AdminOrder) => (
-        <span className="font-mono text-xs">{order.id}</span>
+      render: (order: Order) => (
+        <span className="font-mono text-xs">#{order.id}</span>
       ),
     },
     {
       key: "productTitle",
       header: "Product",
-      render: (order: AdminOrder) => (
+      render: (order: Order) => (
         <div>
           <p className="font-medium">{order.productTitle}</p>
           <p className="text-xs text-cream/50">{order.buyerEmail}</p>
@@ -39,35 +77,26 @@ export default function AdminOrders() {
       ),
     },
     {
-      key: "sellerEmail",
-      header: "Seller",
-    },
-    {
       key: "amount",
       header: "Amount",
-      render: (order: AdminOrder) => `$${order.amount}`,
-    },
-    {
-      key: "platformFee",
-      header: "Platform Fee",
-      render: (order: AdminOrder) => (
-        <span className="text-champagne">${order.platformFee.toFixed(2)}</span>
-      ),
+      render: (order: Order) => formatPrice(order.amount * 100, 'USD'),
     },
     {
       key: "status",
       header: "Status",
-      render: (order: AdminOrder) => <StatusBadge status={order.status} />,
+      render: (order: Order) => <StatusBadge status={order.status} />,
     },
     {
-      key: "createdAt",
+      key: "purchasedAt",
       header: "Date",
-      render: (order: AdminOrder) => new Date(order.createdAt).toLocaleDateString(),
+      render: (order: Order) => order.purchasedAt
+        ? new Date(order.purchasedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        : 'N/A',
     },
     {
       key: "actions",
       header: "",
-      render: (order: AdminOrder) => (
+      render: (order: Order) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="text-cream/50 hover:text-cream">
@@ -104,10 +133,20 @@ export default function AdminOrders() {
     },
   ];
 
+  if (isLoading) {
+    return (
+      <AdminLayout title="Orders" subtitle="View and manage orders">
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-8 w-8 animate-spin text-champagne" />
+        </div>
+      </AdminLayout>
+    );
+  }
+
   return (
     <AdminLayout title="Orders" subtitle="View and manage orders">
       <DataTable
-        data={mockOrders}
+        data={orders}
         columns={columns}
         searchPlaceholder="Search orders..."
         filterOptions={[

@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { AvatarCropModal } from "@/components/ui/avatar-crop-modal";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-import { Loader2, User, Mail, Camera, Save, ArrowLeft, Lock, Eye, EyeOff } from "lucide-react";
+import { Loader2, User, Mail, Camera, Save, ArrowLeft, Lock, Eye, EyeOff, Globe } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import api from "@/lib/api";
@@ -43,6 +43,7 @@ const Profile = () => {
         display_name: "",
         bio: "",
         avatar_url: "",
+        website: "",
     });
 
     // Redirect if not logged in
@@ -60,6 +61,7 @@ const Profile = () => {
                 display_name: user.display_name || "",
                 bio: user.bio || "",
                 avatar_url: user.avatar_url || "",
+                website: (user as any).website || "",
             });
             setAvatarPreview(user.avatar_url || null);
         }
@@ -396,6 +398,29 @@ const Profile = () => {
                                             This will be visible on your public profile
                                         </p>
                                     </div>
+
+                                    {/* Website - Show for sellers and admins */}
+                                    {(user.role === 'seller' || user.role === 'admin') && (
+                                        <div className="space-y-2">
+                                            <Label htmlFor="website" className="flex items-center gap-2">
+                                                <Globe className="h-4 w-4" />
+                                                Website
+                                            </Label>
+                                            <Input
+                                                id="website"
+                                                type="url"
+                                                placeholder="https://yourwebsite.com"
+                                                value={formData.website}
+                                                onChange={(e) =>
+                                                    setFormData({ ...formData, website: e.target.value })
+                                                }
+                                                disabled={isSubmitting}
+                                            />
+                                            <p className="text-xs text-muted-foreground">
+                                                Your portfolio or business website
+                                            </p>
+                                        </div>
+                                    )}
 
                                     {/* Balance Display */}
                                     <div className="p-4 rounded-lg bg-champagne/10 border border-champagne/20">

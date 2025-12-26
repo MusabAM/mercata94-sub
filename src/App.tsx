@@ -17,16 +17,22 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import SellerDashboard from "./pages/SellerDashboard";
+import DashboardUpload from "./pages/DashboardUpload";
+import ProductEdit from "./pages/ProductEdit";
 import BuyerDashboard from "./pages/BuyerDashboard";
 import Profile from "./pages/Profile";
+import SellerProfile from "./pages/SellerProfile";
 import NotFound from "./pages/NotFound";
 import Forbidden from "./pages/Forbidden";
-import Legal from "./pages/Legal";
+import Cart from "./pages/Cart";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
+
+// Legal Pages (from colleague)
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
-import Refund from "./pages/Refund";
-import License from "./pages/License";
 import Cookie from "./pages/Cookie";
+import Refund from "./pages/Refund";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -51,6 +57,7 @@ const App = () => (
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Index />} />
+              <Route path="/cart" element={<Cart />} />
               <Route path="/products" element={<Products />} />
               <Route path="/products/:slug" element={<ProductDetail />} />
               <Route path="/sell" element={<Sell />} />
@@ -60,15 +67,20 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/dashboard" element={<SellerDashboard />} />
+              <Route path="/dashboard/upload" element={<DashboardUpload />} />
+              <Route path="/dashboard/edit/:productId" element={<ProductEdit />} />
               <Route path="/purchases" element={<BuyerDashboard />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/seller/:displayName" element={<SellerProfile />} />
               <Route path="/403" element={<Forbidden />} />
-              <Route path="/legal" element={<Legal />} />
+              <Route path="/purchase/success" element={<PaymentSuccess />} />
+              <Route path="/purchase/cancel" element={<PaymentCancel />} />
+
+              {/* Legal Routes (from colleague) */}
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/cookie" element={<Cookie />} />
               <Route path="/refund" element={<Refund />} />
-              <Route path="/license" element={<License />} />
-              <Route path="/cookies" element={<Cookie />} />
 
               {/* Admin Routes - Protected */}
               <Route

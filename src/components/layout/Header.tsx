@@ -60,12 +60,14 @@ const HeaderActions = () => {
       <Button variant="ghost" size="icon" className="text-cream/70 hover:text-cream hover:bg-sapphire/10">
         <Search className="h-5 w-5" />
       </Button>
-      <Button variant="ghost" size="icon" className="relative text-cream/70 hover:text-cream hover:bg-sapphire/10">
-        <ShoppingBag className="h-5 w-5" />
-        {totalItems > 0 &&
-          <Badge className="absolute -top-1 -right-1 h-4 w-4 justify-center p-0 text-xs bg-champagne text-black">{totalItems}</Badge>
-        }
-      </Button>
+      <Link to="/cart">
+        <Button variant="ghost" size="icon" className="relative text-cream/70 hover:text-cream hover:bg-sapphire/10">
+          <ShoppingBag className="h-5 w-5" />
+          {totalItems > 0 &&
+            <Badge className="absolute -top-1 -right-1 h-4 w-4 justify-center p-0 text-xs bg-champagne text-black">{totalItems}</Badge>
+          }
+        </Button>
+      </Link>
       {user ? (
         <div className="flex items-center gap-2">
           <Link to="/profile" className="flex items-center gap-2 pl-2 hover:opacity-80 transition-opacity">
@@ -112,7 +114,10 @@ const MobileNavLink = ({ to, children, closeMenu }) => (
 
 const getNavigationLinks = (user) => [
   { to: '/products', label: 'Products' },
-  { to: '/sell', label: 'Sell' },
+  // Show "Sell" only to buyers or non-logged-in users (sellers/admins already have dashboard)
+  ...((user?.role !== 'seller' && user?.role !== 'admin') ? [{ to: '/sell', label: 'Sell' }] : []),
+  ...(user ? [{ to: '/purchases', label: 'Purchases' }] : []),
+  ...((user?.role === 'seller' || user?.role === 'admin') ? [{ to: '/dashboard', label: 'Dashboard' }] : []),
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
   ...(user?.role === 'admin' ? [{ to: '/admin', label: 'Admin' }] : []),

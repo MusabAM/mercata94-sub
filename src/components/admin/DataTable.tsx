@@ -34,7 +34,7 @@ interface DataTableProps<T> {
   itemsPerPage?: number;
 }
 
-export function DataTable<T extends { id: string }>({
+export function DataTable<T extends { id: string | number }>({
   data,
   columns,
   searchPlaceholder = "Search...",
@@ -49,7 +49,7 @@ export function DataTable<T extends { id: string }>({
 
   // Filter and search
   let filteredData = data;
-  
+
   if (search) {
     filteredData = filteredData.filter((item) =>
       Object.values(item).some(

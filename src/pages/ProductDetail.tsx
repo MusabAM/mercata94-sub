@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -13,156 +14,78 @@ import {
   Clock,
   Check,
   ChevronRight,
+  Loader2,
+  Edit,
+  AlertTriangle,
 } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
-import ebookTemplate from "@/assets/products/ebook-template.png";
-import uiKit from "@/assets/products/ui-kit.png";
-import courseBundle from "@/assets/products/course-bundle.png";
+import { useAuth } from "@/contexts/AuthContext";
+import api from "@/lib/api";
+import { formatPrice } from "@/lib/utils";
 import { toast } from "sonner";
 
-const products: Record<string, any> = {
-  "modern-ebook-template": {
-    id: "1",
-    title: "Modern E-Book Template",
-    slug: "modern-ebook-template",
-    description:
-      "A modern, fully editable e-book layout perfect for authors, coaches, and content creators. This template includes 50+ unique pages designed in Figma, Sketch, and Notion formats.",
-    fullDescription: `
-      Create stunning e-books with our professionally designed template. Perfect for:
-      • Authors publishing digital books
-      • Coaches creating course materials
-      • Marketers building lead magnets
-      • Content creators monetizing their knowledge
-      
-      The template includes chapter layouts, content pages, callout boxes, image galleries, and more. All elements are fully customizable to match your brand.
-    `,
-    price: 2999,
-    currency: "INR",
-    seller: {
-      name: "DesignPro",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=designpro",
-      verified: true,
-      products: 24,
-      sales: 1200,
-    },
-    images: [ebookTemplate],
-    badge: "Featured",
-    category: "Templates",
-    rating: 4.9,
-    sales: 342,
-    reviews: 128,
-    includes: [
-      "50+ Unique Page Layouts",
-      "Figma, Sketch & Notion Files",
-      "Free Updates",
-      "Commercial License",
-      "24/7 Support",
-    ],
-    tags: ["ebook", "template", "figma", "notion", "design"],
-  },
-  "premium-ui-kit-collection": {
-    id: "2",
-    title: "Premium UI Kit Collection",
-    slug: "premium-ui-kit-collection",
-    description:
-      "500+ mobile app UI components with dark mode support. Built with auto-layout in Figma for easy customization.",
-    fullDescription: `
-      The ultimate UI kit for mobile app designers. Includes:
-      • 500+ unique components
-      • Dark & light mode variants
-      • Auto-layout support
-      • iOS & Android guidelines compliance
-      • Design system documentation
-      
-      Save hundreds of hours with pre-built components for login flows, dashboards, e-commerce, social features, and more.
-    `,
-    price: 4999,
-    currency: "INR",
-    seller: {
-      name: "UIWorks",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=uiworks",
-      verified: true,
-      products: 18,
-      sales: 890,
-    },
-    images: [uiKit],
-    badge: "New",
-    category: "UI Kits",
-    rating: 4.8,
-    sales: 189,
-    reviews: 67,
-    includes: [
-      "500+ UI Components",
-      "Dark & Light Modes",
-      "Figma Source Files",
-      "Design Tokens",
-      "Lifetime Updates",
-    ],
-    tags: ["ui-kit", "mobile", "figma", "components", "design-system"],
-  },
-  "creative-course-bundle": {
-    id: "3",
-    title: "Creative Course Bundle",
-    slug: "creative-course-bundle",
-    description:
-      "Complete video course bundle for design professionals. Learn UI/UX design, branding, and product design from industry experts.",
-    fullDescription: `
-      Master creative design with our comprehensive course bundle:
-      • 40+ hours of video content
-      • Project-based learning
-      • Industry expert instructors
-      • Certificate of completion
-      • Private community access
-      
-      Courses include UI/UX fundamentals, advanced Figma techniques, branding masterclass, and portfolio building.
-    `,
-    price: 7999,
-    currency: "INR",
-    seller: {
-      name: "CodeMaster",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=codemaster",
-      verified: true,
-      products: 12,
-      sales: 2100,
-    },
-    images: [courseBundle],
-    badge: "Bestseller",
-    category: "Courses",
-    rating: 5.0,
-    sales: 567,
-    reviews: 234,
-    includes: [
-      "40+ Hours of Content",
-      "Project Files",
-      "Certificate",
-      "Community Access",
-      "Lifetime Access",
-    ],
-    tags: ["course", "design", "ui-ux", "learning", "professional"],
-  },
-};
+interface Product {
+  id: number;
+  title: string;
+  slug: string;
+  description: string;
+  full_description: string;
+  price: number;
+  currency: string;
+  category: string;
+  badge: string | null;
+  status: string;
+  thumbnail_url: string | null;
+  images: string[];
+  features: string[];
+  tags: string[];
+  seller_id: number;
+  seller_name: string;
+  seller_avatar: string | null;
+  seller_is_verified: boolean;
+}
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
+  const { user } = useAuth();
   const addItem = useCartStore((state) => state.addItem);
-  const product = slug ? products[slug] : null;
 
-  const formatPrice = (price: number, currency: string) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: currency,
-      minimumFractionDigits: 0,
-    }).format(price / 100);
-  };
+  const [product, setProduct] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch product data
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (!slug) return;
+
+      try {
+        setIsLoading(true);
+        const response = await api.get(`/products/${slug}`);
+        setProduct(response.data);
+      } catch (err: any) {
+        console.error('Error fetching product:', err);
+        setError(err.response?.data?.message || 'Product not found');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [slug]);
+
+  // Convert both to numbers for comparison to handle type mismatches
+  const isOwner = user && product && Number(user.id) === Number(product.seller_id);
+  const isPublished = product?.status === 'published';
 
   const handleAddToCart = () => {
     if (!product) return;
 
     const itemToAdd = {
-      id: product.id,
+      id: product.id.toString(),
       name: product.title,
       price: product.price,
-      image: product.images[0],
+      image: product.thumbnail_url || (product.images && product.images[0]) || '',
     };
 
     addItem(itemToAdd);
@@ -172,12 +95,25 @@ const ProductDetail = () => {
     });
   };
 
-  if (!product) {
+  // Loading state
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-champagne" />
+        </div>
+      </Layout>
+    );
+  }
+
+  // Error or not found state
+  if (error || !product) {
     return (
       <Layout>
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <h1 className="heading-large mb-4">Product Not Found</h1>
+            <p className="text-muted-foreground mb-6">{error}</p>
             <Button variant="luxury-outline" asChild>
               <Link to="/products">Browse Products</Link>
             </Button>
@@ -187,6 +123,11 @@ const ProductDetail = () => {
     );
   }
 
+  // Get the main display image
+  const displayImage = product.thumbnail_url || (product.images && product.images[0]) || '';
+  const features = product.features || [];
+  const tags = product.tags || [];
+
   return (
     <>
       <Helmet>
@@ -194,44 +135,54 @@ const ProductDetail = () => {
         <meta name="description" content={product.description} />
         <meta property="og:title" content={product.title} />
         <meta property="og:description" content={product.description} />
-        <meta property="og:image" content={product.images[0]} />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Product",
-            name: product.title,
-            description: product.description,
-            image: product.images[0],
-            offers: {
-              "@type": "Offer",
-              price: product.price / 100,
-              priceCurrency: product.currency,
-            },
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: product.rating,
-              reviewCount: product.reviews,
-            },
-          })}
-        </script>
+        {displayImage && <meta property="og:image" content={displayImage} />}
       </Helmet>
       <Layout>
-        {/* Breadcrumb */}
-        <nav className="pt-24 pb-4 border-b border-border bg-stone/20">
+        {/* Owner/Status Banner - pt-20 for fixed header offset */}
+        {isOwner && !isPublished && (
+          <div className="pt-20 bg-amber-500/20 border-b border-amber-500/30">
+            <div className="container-luxury py-3 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-amber-600">
+                <AlertTriangle className="h-4 w-4" />
+                <span className="text-sm font-medium">
+                  This product is <span className="capitalize">{product.status}</span> and not visible to customers
+                </span>
+              </div>
+              <Button variant="luxury-outline" size="sm" asChild>
+                <Link to={`/dashboard/edit/${product.id}`}>
+                  <Edit className="h-4 w-4 mr-2" />
+                  Edit Product
+                </Link>
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Breadcrumb - only add pt-24 if banner is not showing */}
+        <nav className={`${(isOwner && !isPublished) ? 'pt-4' : 'pt-24'} pb-4 border-b border-border bg-stone/20`}>
           <div className="container-luxury">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Link to="/" className="hover:text-foreground transition-colors">
-                Home
-              </Link>
-              <ChevronRight className="h-4 w-4" />
-              <Link
-                to="/products"
-                className="hover:text-foreground transition-colors"
-              >
-                Products
-              </Link>
-              <ChevronRight className="h-4 w-4" />
-              <span className="text-foreground">{product.title}</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Link to="/" className="hover:text-foreground transition-colors">
+                  Home
+                </Link>
+                <ChevronRight className="h-4 w-4" />
+                <Link to="/products" className="hover:text-foreground transition-colors">
+                  Products
+                </Link>
+                <ChevronRight className="h-4 w-4" />
+                <span className="text-foreground">{product.title}</span>
+              </div>
+
+              {/* Edit button for owner (visible on published products too) */}
+              {isOwner && isPublished && (
+                <Button variant="luxury-outline" size="sm" asChild>
+                  <Link to={`/dashboard/edit/${product.id}`}>
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit Product
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
         </nav>
@@ -243,12 +194,30 @@ const ProductDetail = () => {
               {/* Left - Images */}
               <div className="space-y-4">
                 <div className="aspect-square rounded-xl overflow-hidden bg-stone">
-                  <img
-                    src={product.images[0]}
-                    alt={product.title}
-                    className="w-full h-full object-cover"
-                  />
+                  {displayImage ? (
+                    <img
+                      src={displayImage}
+                      alt={product.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                      No image available
+                    </div>
+                  )}
                 </div>
+
+                {/* Gallery thumbnails */}
+                {product.images && product.images.length > 1 && (
+                  <div className="grid grid-cols-4 gap-2">
+                    {product.images.slice(0, 4).map((img, idx) => (
+                      <div key={idx} className="aspect-square rounded-lg overflow-hidden bg-secondary">
+                        <img src={img} alt={`${product.title} ${idx + 1}`} className="w-full h-full object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {product.badge && (
                   <Badge
                     variant="outline"
@@ -272,30 +241,6 @@ const ProductDetail = () => {
                   </p>
                 </div>
 
-                {/* Rating & Stats */}
-                <div className="flex items-center gap-6 py-4 border-y border-border">
-                  <div className="flex items-center gap-2">
-                    <div className="flex gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-4 w-4 ${i < Math.floor(product.rating)
-                            ? "text-champagne fill-current"
-                            : "text-muted"
-                            }`}
-                        />
-                      ))}
-                    </div>
-                    <span className="font-medium">{product.rating}</span>
-                    <span className="text-muted-foreground">
-                      ({product.reviews} reviews)
-                    </span>
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {product.sales} sales
-                  </div>
-                </div>
-
                 {/* Price & CTA */}
                 <div className="space-y-4">
                   <div className="flex items-baseline gap-2">
@@ -309,6 +254,7 @@ const ProductDetail = () => {
                       size="xl"
                       className="flex-1"
                       onClick={handleAddToCart}
+                      disabled={!isPublished && !isOwner}
                     >
                       <ShoppingCart className="h-5 w-5 mr-2" />
                       Add to Cart
@@ -322,41 +268,54 @@ const ProductDetail = () => {
                   </div>
                 </div>
 
-                {/* What's included */}
-                <div className="space-y-4 p-6 rounded-xl bg-secondary/30">
-                  <h3 className="font-medium">What's Included</h3>
-                  <ul className="space-y-3">
-                    {product.includes.map((item: string) => (
-                      <li key={item} className="flex items-center gap-3 text-sm">
-                        <Check className="h-4 w-4 text-champagne" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {/* What's included / Features */}
+                {features.length > 0 && (
+                  <div className="space-y-4 p-6 rounded-xl bg-secondary/30">
+                    <h3 className="font-medium">Features</h3>
+                    <ul className="space-y-3">
+                      {features.map((item: string, idx: number) => (
+                        <li key={idx} className="flex items-center gap-3 text-sm">
+                          <Check className="h-4 w-4 text-champagne" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
                 {/* Seller info */}
                 <div className="flex items-center justify-between p-6 rounded-xl border border-border">
                   <div className="flex items-center gap-4">
-                    <img
-                      src={product.seller.avatar}
-                      alt={product.seller.name}
-                      className="w-12 h-12 rounded-full bg-secondary"
-                    />
+                    {product.seller_avatar ? (
+                      <img
+                        src={product.seller_avatar}
+                        alt={product.seller_name}
+                        className="w-12 h-12 rounded-full bg-secondary object-cover"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center">
+                        <span className="text-lg font-medium">{product.seller_name?.charAt(0)}</span>
+                      </div>
+                    )}
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-medium">{product.seller.name}</span>
-                        {product.seller.verified && (
+                        <span className="font-medium">{product.seller_name}</span>
+                        {product.seller_is_verified && (
                           <Shield className="h-4 w-4 text-champagne" />
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground">
-                        {product.seller.products} products · {product.seller.sales}{" "}
-                        sales
-                      </p>
+                      {product.seller_is_verified ? (
+                        <p className="text-sm text-muted-foreground">Verified Seller</p>
+                      ) : (
+                        <p className="text-sm text-muted-foreground">Seller</p>
+                      )}
                     </div>
                   </div>
-                  <Button variant="luxury-outline" size="sm">
+                  <Button
+                    variant="luxury-outline"
+                    size="sm"
+                    onClick={() => window.open(`/seller/${encodeURIComponent(product.seller_name)}`, '_blank')}
+                  >
                     View Profile
                   </Button>
                 </div>
@@ -379,25 +338,29 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            {/* Description */}
-            <div className="mt-16 pt-16 border-t border-border">
-              <h2 className="heading-medium mb-6">Description</h2>
-              <div className="prose prose-neutral max-w-none">
-                <pre className="whitespace-pre-wrap font-sans text-muted-foreground">
-                  {product.fullDescription}
-                </pre>
+            {/* Full Description */}
+            {product.full_description && (
+              <div className="mt-16 pt-16 border-t border-border">
+                <h2 className="heading-medium mb-6">Description</h2>
+                <div className="prose prose-neutral max-w-none">
+                  <pre className="whitespace-pre-wrap font-sans text-muted-foreground">
+                    {product.full_description}
+                  </pre>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Tags */}
-            <div className="mt-12 flex items-center gap-3 flex-wrap">
-              <span className="text-sm text-muted-foreground">Tags:</span>
-              {product.tags.map((tag: string) => (
-                <Badge key={tag} variant="secondary" className="text-xs">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
+            {tags.length > 0 && (
+              <div className="mt-12 flex items-center gap-3 flex-wrap">
+                <span className="text-sm text-muted-foreground">Tags:</span>
+                {tags.map((tag: string) => (
+                  <Badge key={tag} variant="secondary" className="text-xs">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       </Layout>

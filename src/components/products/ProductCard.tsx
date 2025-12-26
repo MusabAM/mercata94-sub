@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Eye, ShoppingCart, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCartStore } from "@/store/cartStore";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   product: {
@@ -33,12 +35,31 @@ const badgeVariants: Record<string, string> = {
 };
 
 export function ProductCard({ product, className, style }: ProductCardProps) {
+  const addItem = useCartStore((state) => state.addItem);
+
   const formatPrice = (price: number, currency: string) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
       currency: currency,
       minimumFractionDigits: 0,
     }).format(price / 100);
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation if card is wrapped in Link
+    e.stopPropagation();
+
+    addItem({
+      id: product.id,
+      name: product.title,
+      price: product.price,
+      image: product.image,
+      currency: product.currency,
+    });
+
+    toast.success("Added to cart", {
+      description: `${product.title} has been added to your cart.`,
+    });
   };
 
   return (
@@ -91,6 +112,7 @@ export function ProductCard({ product, className, style }: ProductCardProps) {
             size="icon"
             variant="sapphire"
             className="rounded-full"
+            onClick={handleAddToCart}
           >
             <ShoppingCart className="h-4 w-4" />
           </Button>
@@ -127,11 +149,17 @@ export function ProductCard({ product, className, style }: ProductCardProps) {
         <div className="flex items-center justify-between pt-2 border-t border-sapphire/20">
           {/* Seller */}
           <div className="flex items-center gap-2">
-            <img
-              src={product.seller.avatar}
-              alt={product.seller.name}
-              className="w-6 h-6 rounded-full bg-midnight border border-sapphire/30"
-            />
+            {product.seller.avatar ? (
+              <img
+                src={product.seller.avatar}
+                alt={product.seller.name}
+                className="w-6 h-6 rounded-full bg-midnight border border-sapphire/30 object-cover"
+              />
+            ) : (
+              <div className="w-6 h-6 rounded-full bg-midnight border border-sapphire/30 flex items-center justify-center">
+                <span className="text-xs text-cream/50">{product.seller.name.charAt(0).toUpperCase()}</span>
+              </div>
+            )}
             <span className="text-xs text-cream/50">
               {product.seller.name}
             </span>
