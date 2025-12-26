@@ -3,9 +3,8 @@ import { Layout } from "@/components/layout/Layout";
 import { ProductCard } from "@/components/products/ProductCard";
 import { SemanticSearchBar } from "@/components/products/SemanticSearchBar";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Helmet } from "react-helmet-async";
-import { SlidersHorizontal, Sparkles } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 import ebookTemplate from "@/assets/products/ebook-template.png";
 import uiKit from "@/assets/products/ui-kit.png";
 import courseBundle from "@/assets/products/course-bundle.png";
@@ -141,7 +140,7 @@ const Products = () => {
   return (
     <>
       <Helmet>
-        <title>Browse Products — Mercato94</title>
+        <title>Browse Products — 94mercato</title>
         <meta
           name="description"
           content="Explore our curated collection of premium digital products. Templates, UI kits, courses, and more from verified creators."
@@ -149,10 +148,12 @@ const Products = () => {
       </Helmet>
       <Layout>
         {/* Hero section */}
-        <section className="pt-32 pb-12 bg-gradient-to-b from-stone/30 to-background">
+        <section className="pt-24 md:pt-32 pb-12 bg-gradient-to-b from-stone/30 to-background">
           <div className="container-luxury">
             <div className="max-w-2xl">
-              <h1 className="heading-large mb-4">Browse Products</h1>
+              <h1 className="heading-large text-4xl md:text-5xl mb-4">
+                Browse Products
+              </h1>
               <p className="text-muted-foreground text-lg">
                 Discover premium digital products from our curated marketplace.
               </p>
@@ -161,29 +162,31 @@ const Products = () => {
         </section>
 
         {/* Filters */}
-        <section className="py-8 border-b border-border sticky top-20 z-40 bg-background/80 backdrop-blur-xl">
+        <section className="py-6 border-b border-border sticky top-16 md:top-20 z-40 bg-background/80 backdrop-blur-xl">
           <div className="container-luxury">
-            <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-              {/* AI-Powered Search */}
+            <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center justify-between">
               <SemanticSearchBar
                 value={searchQuery}
                 onChange={setSearchQuery}
-                className="w-full md:w-96"
+                className="w-full md:w-80 lg:w-96"
               />
 
-              {/* Categories */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
-                {categories.map((category) => (
-                  <Button
-                    key={category}
-                    variant={selectedCategory === category ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => setSelectedCategory(category)}
-                    className="whitespace-nowrap"
-                  >
-                    {category}
-                  </Button>
-                ))}
+              <div className="w-full md:w-auto">
+                <div className="flex items-center gap-2 -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 overflow-x-auto pb-2 md:pb-0">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={
+                        selectedCategory === category ? "default" : "ghost"
+                      }
+                      size="sm"
+                      onClick={() => setSelectedCategory(category)}
+                      className="whitespace-nowrap shrink-0"
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -192,10 +195,9 @@ const Products = () => {
         {/* Products grid */}
         <section className="section-padding">
           <div className="container-luxury">
-            {/* Results info */}
-            <div className="flex items-center justify-between mb-8">
-              <p className="text-muted-foreground">
-                Showing {filteredProducts.length} products
+            <div className="flex items-center justify-between mb-6 md:mb-8">
+              <p className="text-sm text-muted-foreground">
+                Showing {filteredProducts.length} of {allProducts.length} results
               </p>
               <Button variant="ghost" size="sm">
                 <SlidersHorizontal className="h-4 w-4 mr-2" />
@@ -203,9 +205,8 @@ const Products = () => {
               </Button>
             </div>
 
-            {/* Grid */}
             {filteredProducts.length > 0 ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {filteredProducts.map((product, index) => (
                   <ProductCard
                     key={product.id}
@@ -216,9 +217,13 @@ const Products = () => {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20">
-                <p className="text-xl text-muted-foreground mb-4">
-                  No products found
+              <div className="text-center py-16 md:py-20">
+                <h3 className="text-xl font-medium text-foreground mb-2">
+                  No Products Found
+                </h3>
+                <p className="text-muted-foreground mb-6 max-w-sm mx-auto">
+                  Your search for "{searchQuery}" did not return any results.
+                  Try a different term or clear filters.
                 </p>
                 <Button
                   variant="luxury-outline"
@@ -227,7 +232,7 @@ const Products = () => {
                     setSelectedCategory("All");
                   }}
                 >
-                  Clear filters
+                  Clear Filters
                 </Button>
               </div>
             )}

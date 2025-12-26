@@ -24,32 +24,32 @@ export function SellerCTA() {
   return (
     <section className="section-padding bg-gradient-to-br from-sapphire/20 via-midnight to-midnight-light relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-sapphire/20 rounded-full blur-[150px]" />
-      <div className="absolute bottom-1/4 left-0 w-[400px] h-[400px] bg-champagne/10 rounded-full blur-[120px]" />
+      <div className="absolute top-1/4 right-0 w-[50vw] h-[50vh] bg-sapphire/20 rounded-full blur-[150px]" />
+      <div className="absolute bottom-1/4 left-0 w-[40vw] h-[40vh] bg-champagne/10 rounded-full blur-[120px]" />
       
       <div className="container-luxury relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left content */}
-          <div className="space-y-8">
+          <div className="space-y-8 text-center lg:text-left">
             <div className="space-y-4">
               <span className="text-xs tracking-widest uppercase text-champagne">
                 For Creators
               </span>
-              <h2 className="font-serif text-4xl md:text-5xl font-medium leading-tight text-cream">
+              <h2 className="font-serif text-3xl md:text-5xl font-medium leading-tight text-cream">
                 Turn Your Craft
                 <br />
                 <span className="gradient-text">Into Revenue</span>
               </h2>
-              <p className="text-cream/60 text-lg max-w-md">
+              <p className="text-cream/60 text-base md:text-lg max-w-md mx-auto lg:mx-0">
                 Join our growing community of creators and reach customers looking for premium digital products.
               </p>
             </div>
 
             {/* Benefits */}
-            <div className="space-y-6">
+            <div className="space-y-6 max-w-md mx-auto lg:mx-0">
               {benefits.map((benefit) => (
-                <div key={benefit.title} className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-sapphire/30 to-sapphire/10 border border-sapphire/30 flex items-center justify-center flex-shrink-0">
+                <div key={benefit.title} className="flex items-start gap-4 text-left">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-sapphire/30 to-sapphire/10 border border-sapphire/30 flex items-center justify-center flex-shrink-0">
                     <benefit.icon className="h-5 w-5 text-champagne" />
                   </div>
                   <div>
@@ -65,8 +65,8 @@ export function SellerCTA() {
             </div>
 
             {/* CTA */}
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <Button variant="champagne" size="xl" asChild>
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+              <Button variant="champagne" size="lg" asChild>
                 <Link to="/sell">
                   Start Selling Today
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -76,15 +76,14 @@ export function SellerCTA() {
           </div>
 
           {/* Right visual */}
-          <div className="relative">
-            {/* Decorative cards */}
-            <div className="relative space-y-4">
+          <div className="relative mt-12 lg:mt-0">
+            <div className="relative space-y-4 max-w-md mx-auto">
               {/* Stats card */}
-              <div className="midnight-glass p-6 max-w-sm ml-auto animate-slide-up">
+              <div className="midnight-glass p-6 w-full animate-slide-up">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-sm text-cream/60">Your Dashboard</span>
                 </div>
-                <p className="text-4xl font-serif font-medium text-cream mb-2">
+                <p className="text-3xl md:text-4xl font-serif font-medium text-cream mb-2">
                   Track Your
                 </p>
                 <p className="text-sm text-cream/50">Earnings & Growth</p>

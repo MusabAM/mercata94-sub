@@ -4,8 +4,8 @@ export function Testimonials() {
   return (
     <section className="section-padding bg-midnight-light relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-0 left-1/3 w-96 h-96 bg-sapphire/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 right-1/3 w-96 h-96 bg-champagne/5 rounded-full blur-[100px]" />
+      <div className="absolute top-0 left-1/3 w-[50vw] h-[50vh] bg-sapphire/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 right-1/3 w-[40vw] h-[40vh] bg-champagne/5 rounded-full blur-[100px]" />
       
       <div className="container-luxury relative z-10">
         {/* Section header */}

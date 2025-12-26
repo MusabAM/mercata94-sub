@@ -51,12 +51,12 @@ export function Categories() {
   return (
     <section className="section-padding bg-midnight relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-sapphire/10 rounded-full blur-[150px] -translate-y-1/2" />
-      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-champagne/5 rounded-full blur-[120px] -translate-y-1/2" />
+      <div className="absolute top-1/2 left-0 w-[50vw] h-[50vh] bg-sapphire/10 rounded-full blur-[150px] -translate-y-1/2" />
+      <div className="absolute top-1/2 right-0 w-[40vw] h-[40vh] bg-champagne/5 rounded-full blur-[120px] -translate-y-1/2" />
       
       <div className="container-luxury relative z-10">
         {/* Section header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
           <span className="text-xs tracking-widest uppercase text-champagne">
             Explore Categories
           </span>
@@ -76,7 +76,7 @@ export function Categories() {
               key={category.name}
               to={category.href}
               className={cn(
-                "group relative p-8 rounded-xl overflow-hidden transition-all duration-500",
+                "group relative p-6 md:p-8 rounded-xl overflow-hidden transition-all duration-500",
                 "bg-gradient-to-br hover:shadow-sapphire hover:-translate-y-1",
                 "border border-sapphire/20 hover:border-sapphire/40",
                 category.gradient,
@@ -85,11 +85,11 @@ export function Categories() {
             >
               {/* Content */}
               <div className="relative z-10">
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="font-serif text-xl font-medium text-cream">
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="font-serif text-lg md:text-xl font-medium text-cream">
                     {category.name}
                   </h3>
-                  <div className="w-10 h-10 rounded-full bg-cream/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-y-2 group-hover:translate-y-0">
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-cream/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-y-2 group-hover:translate-y-0">
                     <ArrowUpRight className="h-4 w-4 text-cream" />
                   </div>
                 </div>
@@ -102,7 +102,7 @@ export function Categories() {
               </div>
 
               {/* Decorative element */}
-              <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-cream/5 group-hover:scale-150 transition-transform duration-700" />
+              <div className="absolute -bottom-8 -right-8 w-24 h-24 md:w-32 md:h-32 rounded-full bg-cream/5 group-hover:scale-150 transition-transform duration-700" />
             </Link>
           ))}
         </div>

@@ -21,7 +21,7 @@ const values = [
     icon: Shield,
     title: "Trust & Security",
     description:
-      "Secure payments, verified sellers, and buyer protection. We're building a foundation of trust.",
+      "Secure payments, verified sellers, and buyer protection. We\'re building a foundation of trust.",
   },
 ];
 
@@ -50,20 +50,20 @@ const About = () => {
       </Helmet>
       <Layout>
         {/* Hero */}
-        <section className="pt-32 pb-20 bg-gradient-to-b from-stone/30 to-background">
+        <section className="pt-24 md:pt-32 pb-16 md:pb-20 bg-gradient-to-b from-stone/30 to-background">
           <div className="container-luxury">
             <div className="max-w-3xl mx-auto text-center">
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-champagne/10 rounded-full mb-8 animate-fade-up">
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-champagne/10 rounded-full mb-6 md:mb-8 animate-fade-up">
                 <span className="text-xs tracking-widest uppercase text-muted-foreground">
                   Our Story
                 </span>
               </span>
-              <h1 className="heading-display mb-6 animate-fade-up delay-100">
+              <h1 className="heading-display text-4xl md:text-6xl mb-6 animate-fade-up delay-100">
                 Where Digital Craft
                 <br />
                 <span className="text-taupe">Becomes Timeless</span>
               </h1>
-              <p className="text-xl text-muted-foreground animate-fade-up delay-200">
+              <p className="text-lg md:text-xl text-muted-foreground animate-fade-up delay-200">
                 94mercato is a curated marketplace for premium digital products.
                 We connect talented creators with customers who value quality and
                 craftsmanship.
@@ -75,13 +75,13 @@ const About = () => {
         {/* Mission */}
         <section className="section-padding bg-background">
           <div className="container-luxury">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="space-y-8">
+            <div className="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
+              <div className="space-y-6">
                 <div>
                   <span className="text-xs tracking-widest uppercase text-champagne">
                     Our Mission
                   </span>
-                  <h2 className="heading-large mt-3">
+                  <h2 className="heading-large text-3xl md:text-4xl mt-3">
                     Elevating Digital Creativity
                   </h2>
                 </div>
@@ -94,14 +94,14 @@ const About = () => {
                 <p className="text-muted-foreground">
                   In a world flooded with digital content, we curate. Every
                   product on our platform will meet our standards for quality,
-                  originality, and craftsmanship. This isn't just another
-                  marketplace — it's a gallery of the best digital creation has
+                  originality, and craftsmanship. This isn\'t just another
+                  marketplace — it\'s a gallery of the best digital creation has
                   to offer.
                 </p>
               </div>
               <div className="grid grid-cols-1 gap-4">
-                <div className="glass-card-elevated p-8 text-center">
-                  <p className="text-4xl font-serif font-bold text-champagne">
+                <div className="glass-card-elevated p-6 md:p-8 text-center">
+                  <p className="text-3xl md:text-4xl font-serif font-bold text-champagne">
                     Just Launched
                   </p>
                   <p className="text-sm text-muted-foreground mt-2">
@@ -116,21 +116,23 @@ const About = () => {
         {/* Values */}
         <section className="section-padding bg-stone/30">
           <div className="container-luxury">
-            <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
               <span className="text-xs tracking-widest uppercase text-champagne">
                 Our Values
               </span>
-              <h2 className="heading-large mt-3 mb-4">What We Stand For</h2>
+              <h2 className="heading-large text-3xl md:text-4xl mt-3 mb-4">
+                What We Stand For
+              </h2>
               <p className="text-muted-foreground">
                 These principles guide everything we do at 94mercato.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               {values.map((value, index) => (
                 <div
                   key={value.title}
-                  className={`glass-card-elevated p-8 text-center animate-fade-up delay-${
+                  className={`glass-card-elevated p-6 md:p-8 text-center animate-fade-up delay-${
                     (index + 1) * 100
                   }`}
                 >
@@ -150,18 +152,20 @@ const About = () => {
         {/* Team */}
         <section className="section-padding bg-background">
           <div className="container-luxury">
-            <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
               <span className="text-xs tracking-widest uppercase text-champagne">
                 Our Team
               </span>
-              <h2 className="heading-large mt-3 mb-4">Meet the People Behind</h2>
+              <h2 className="heading-large text-3xl md:text-4xl mt-3 mb-4">
+                Meet the People Behind
+              </h2>
               <p className="text-muted-foreground">
                 A passionate team dedicated to building the best marketplace for
                 digital creators.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 gap-8 max-w-sm mx-auto">
               {team.map((member, index) => (
                 <div
                   key={member.name}
@@ -169,7 +173,7 @@ const About = () => {
                     (index + 1) * 100
                   }`}
                 >
-                  <div className="w-24 h-24 rounded-full bg-secondary mx-auto mb-4 overflow-hidden">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-secondary mx-auto mb-4 overflow-hidden">
                     <img
                       src={member.image}
                       alt={member.name}
@@ -190,13 +194,18 @@ const About = () => {
             <p className="text-xs tracking-widest uppercase text-champagne mb-4">
               A Product By
             </p>
-            <h2 className="font-serif text-4xl font-medium mb-4">Outbrix</h2>
+            <h2 className="font-serif text-3xl md:text-4xl font-medium mb-4">Outbrix</h2>
             <p className="text-background/60 max-w-lg mx-auto mb-10">
               94mercato is proudly built by Outbrix, a company dedicated to
               creating tools and platforms that empower creators worldwide.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <Button variant="champagne" size="xl" className="text-foreground" asChild>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button
+                variant="champagne"
+                size="lg"
+                className="text-foreground w-full sm:w-auto"
+                asChild
+              >
                 <Link to="/sell">
                   Start Selling
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -204,8 +213,8 @@ const About = () => {
               </Button>
               <Button
                 variant="luxury-outline"
-                size="xl"
-                className="border-background/20 text-background hover:bg-background hover:text-foreground"
+                size="lg"
+                className="border-background/20 text-background hover:bg-background hover:text-foreground w-full sm:w-auto"
                 asChild
               >
                 <Link to="/products">Explore Products</Link>

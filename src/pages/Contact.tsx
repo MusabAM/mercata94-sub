@@ -53,11 +53,13 @@ const Contact = () => {
       </Helmet>
       <Layout>
         {/* Hero */}
-        <section className="pt-32 pb-16 bg-gradient-to-b from-stone/30 to-background">
+        <section className="pt-24 md:pt-32 pb-12 md:pb-16 bg-gradient-to-b from-stone/30 to-background">
           <div className="container-luxury">
             <div className="max-w-2xl mx-auto text-center">
-              <h1 className="heading-display mb-4">Get in Touch</h1>
-              <p className="text-xl text-muted-foreground">
+              <h1 className="heading-display text-4xl md:text-6xl mb-4">
+                Get in Touch
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground">
                 We'd love to hear from you. Choose an option below or send us a
                 message.
               </p>
@@ -66,7 +68,7 @@ const Contact = () => {
         </section>
 
         {/* Contact Options */}
-        <section className="pb-16 bg-background">
+        <section className="py-12 md:py-16 bg-background">
           <div className="container-luxury">
             <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {contactOptions.map((option) => (
@@ -84,7 +86,7 @@ const Contact = () => {
                   <p className="text-sm text-muted-foreground mb-3">
                     {option.description}
                   </p>
-                  <span className="text-sm text-champagne">{option.email}</span>
+                  <span className="text-sm text-champagne break-all">{option.email}</span>
                 </a>
               ))}
             </div>
@@ -95,14 +97,16 @@ const Contact = () => {
         <section className="section-padding bg-stone/30">
           <div className="container-luxury">
             <div className="max-w-2xl mx-auto">
-              <div className="text-center mb-12">
+              <div className="text-center mb-8 md:mb-12">
                 <span className="text-xs tracking-widest uppercase text-champagne">
                   Send a Message
                 </span>
-                <h2 className="heading-large mt-3">Contact Form</h2>
+                <h2 className="heading-large text-3xl md:text-4xl mt-3">
+                  Contact Form
+                </h2>
               </div>
 
-              <div className="glass-card-elevated p-8">
+              <div className="glass-card-elevated p-6 md:p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
@@ -174,15 +178,15 @@ const Contact = () => {
         {/* FAQ Teaser */}
         <section className="section-padding bg-background">
           <div className="container-luxury text-center">
-            <h2 className="font-serif text-2xl font-medium mb-4">
+            <h2 className="font-serif text-xl md:text-2xl font-medium mb-4">
               Looking for quick answers?
             </h2>
             <p className="text-muted-foreground mb-6">
               Check out our FAQ section for common questions about buying, selling,
               and account management.
             </p>
-            <Button variant="luxury-outline" size="lg">
-              View FAQ
+            <Button asChild variant="luxury-outline" size="lg">
+              <Link to="/faq">View FAQ</Link>
             </Button>
           </div>
         </section>
